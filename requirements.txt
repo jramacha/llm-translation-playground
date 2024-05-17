@@ -1,0 +1,6 @@
+streamlit==1.34.0
+boto3
+bs4
+langchain
+lxml
+faiss-cpu
