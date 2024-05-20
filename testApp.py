@@ -50,21 +50,36 @@ EMBED_CHOICES = {"amazon.titan-embed-text-v2:0": "Titan Embedding Text v2", "coh
 
 def format_func(option):
     return EMBED_CHOICES[option]
+
 embedding_id=st.selectbox("Select Embedding models from Amazon Bedrock",options=list(EMBED_CHOICES.keys()), format_func=format_func)
 
 
-def getExamplesXml(sl,tl,examples):   
+def getExamplesXml(): 
+    examples=st.session_state.examples
     xml_out = "\n"
     for example in examples:
         xml_out += f"<example>\n<source>{example[sl]}</source>\n<target>{example[tl]}</target>\n</example>\n"
     return xml_out
 
-def getRules(sl,tl):
+def loadRules(sl,tl):
   print(sl, tl)
   tmx_db=st.session_state.tmx_db
   matching_rules = tmx_db.similarity_search(text2translate, filter={"lang": sl})
-  st.session_state.matching_rules=matching_rules 
-  return getExamples(sl,tl,st.session_state.rule_language_lookup ,matching_rules)
+  st.session_state.text2translate=text2translate
+  st.session_state.sl=sl
+  st.session_state.tl=tl
+  st.session_state.matching_rules=matching_rules
+  examples = getExamples(sl,tl,st.session_state.rule_language_lookup ,matching_rules)
+  st.session_state.examples=examples
+
+def displayExamples():
+  examples=st.session_state.examples
+  exampleText=""
+  for example in examples:
+    exampleText+= example[sl] + " : "
+    exampleText+= example[tl]+ "\n"
+  return exampleText
+
 
 
 session_state = st.session_state
@@ -77,26 +92,29 @@ with egcol2:
     st.session_state.tmx_db = tmx_db
     rule_language_lookup=populateRuleLanguageLookup(documents)
     st.session_state.rule_language_lookup = rule_language_lookup
-    examples = getRules(sl,tl)
+    loadRules(sl,tl)
       
 with egcol1:
     st.text("")
 
 
 if st.button("Collect Matching Rules"):
-    examples=getRules(sl,tl)
+    loadRules(sl,tl)
+
+def getExampleText(text2translate, sl, tl):
+  exampleText=""
+  if st.session_state.sl==sl and st.session_state.tl==tl and st.session_state.text2translate==text2translate:
+    exampleText=displayExamples()
+  else:
+    loadRules(sl,tl)
+    exampleText=displayExamples()
+
+  return exampleText  
 
 
-exampleText=""
-for example in examples:
-  exampleText+= example[sl] + " : "
-  exampleText+= example[tl]+ "\n"
-  
+st.text(getExampleText(text2translate, sl, tl))
 
-st.text(exampleText)
-
-
-example_xml=getExamplesXml(sl,tl,examples)
+example_xml=getExamplesXml()
 
 custom_examples=st.text_area("Custom Examples: "+ LAN_CHOICES[sl] + " : " +LAN_CHOICES[tl] +"\n")
 st.write("One example pair per line seperated by colon (:). Examples below")

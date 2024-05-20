@@ -1,0 +1,6 @@
+.venv
+.vscode
+bin
+include
+lib
+pyvevnv.cfg

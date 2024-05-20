@@ -101,6 +101,5 @@ def getExamples(source_lang,target_lang,rule_language_lookup,matching_rules):
         example = {source_lang: rule.page_content, target_lang: rule_language_lookup[rule.metadata["rule_id"]][target_lang]}
         examples.append(example)
         print(example)
-
     return examples
 
