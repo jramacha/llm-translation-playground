@@ -1,0 +1,954 @@
+
+<!DOCTYPE tmx
+  SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+   <header creationtool="TRADOS Translator's Workbench for Windows"
+           creationtoolversion="Edition 8 Build 863"
+           segtype="sentence"
+           o-tmf="TW4Win 2.0 Format"
+           datatype="text"
+           adminlang="EN"
+           srclang="EN">
+      <prop type="Name">ECDC</prop>
+   </header>
+   <body>
+      <tu>
+         <tuv xml:lang="EN">
+            <seg>Vaccination against hepatitis C is not yet available.</seg>
+         </tuv>
+         <tuv xml:lang="BG">
+            <seg>Засега няма ваксина срещу хепатит С.</seg>
+         </tuv>
+         <tuv xml:lang="CS">
+            <seg>Očkování proti hepatitidě C zatím není k dispozici.</seg>
+         </tuv>
+         <tuv xml:lang="DA">
+            <seg>Der findes endnu ingen vaccination mod hepatitis C.</seg>
+         </tuv>
+         <tuv xml:lang="DE">
+            <seg>Es gibt derzeit noch keinen Impfstoff gegen Hepatitis C.</seg>
+         </tuv>
+         <tuv xml:lang="EL">
+            <seg>Επί του παρόντος δεν διατίθεται εμβόλιο έναντι της ηπατίτιδας C.</seg>
+         </tuv>
+         <tuv xml:lang="ES">
+            <seg>Todavía no hay ninguna vacuna contra la hepatitis C.</seg>
+         </tuv>
+         <tuv xml:lang="ET">
+            <seg>C-hepatiidi vastast vaktsiini veel ei ole.</seg>
+         </tuv>
+         <tuv xml:lang="FI">
+            <seg>Hepatiitti C:hen ei ole vielä rokotetta.</seg>
+         </tuv>
+         <tuv xml:lang="FR">
+            <seg>Aucune vaccination contre l’hépatite C n’est encore disponible.</seg>
+         </tuv>
+         <tuv xml:lang="GA">
+            <seg>Níl vacsaíniú ar fáil fós i gcoinne heipitítis C.</seg>
+         </tuv>
+         <tuv xml:lang="HU">
+            <seg>A hepatitisz C ellen nincs még védőoltás.</seg>
+         </tuv>
+         <tuv xml:lang="IS">
+            <seg>Bólusetning gegn lifrarbólgu C er enn ekki til.</seg>
+         </tuv>
+         <tuv xml:lang="IT">
+            <seg>Non c'è ancora un vaccino per l'epatite C.</seg>
+         </tuv>
+         <tuv xml:lang="LT">
+            <seg>Vakcinos nuo hepatito C dar nėra.</seg>
+         </tuv>
+         <tuv xml:lang="LV">
+            <seg>Pagaidām pret hepatītu C nav iespējams vakcinēties.</seg>
+         </tuv>
+         <tuv xml:lang="MT">
+            <seg>It-tilqim kontra l-epatite Ċ għadu mhux disponibbli.</seg>
+         </tuv>
+         <tuv xml:lang="NL">
+            <seg>Er is nog geen vaccin tegen hepatitis C beschikbaar.</seg>
+         </tuv>
+         <tuv xml:lang="NO">
+            <seg>Det finnes foreløpig ingen vaksine mot hepatitt C, og sykdomsbyrden er høy.</seg>
+         </tuv>
+         <tuv xml:lang="PL">
+            <seg>Niestety nadal nie jest dostępna szczepionka przeciwko wirusowemu zapaleniu wątroby typu C.</seg>
+         </tuv>
+         <tuv xml:lang="PT">
+            <seg>De momento, não existe qualquer vacina disponível contra o vírus da hepatite C.</seg>
+         </tuv>
+         <tuv xml:lang="RO">
+            <seg>Nu există încă niciun vaccin disponibil împotriva hepatitei C.</seg>
+         </tuv>
+         <tuv xml:lang="SK">
+            <seg>Proti hepatitíde C nie je zatiaľ dostupné očkovanie.</seg>
+         </tuv>
+         <tuv xml:lang="SL">
+            <seg>Cepiva proti hepatitisu C še ni.</seg>
+         </tuv>
+         <tuv xml:lang="SV">
+            <seg>Det finns ännu inget vaccin mot hepatit C.</seg>
+         </tuv>
+      </tu>
+      <tu>
+         <tuv xml:lang="EN">
+            <seg>HIV infection</seg>
+         </tuv>
+         <tuv xml:lang="BG">
+            <seg>Инфекция с човешки имунодефицитен вирус (ХИВ)</seg>
+         </tuv>
+         <tuv xml:lang="CS">
+            <seg>Infekce HIV</seg>
+         </tuv>
+         <tuv xml:lang="DA">
+            <seg>HIV-infektion</seg>
+         </tuv>
+         <tuv xml:lang="DE">
+            <seg>HIV-Infektion</seg>
+         </tuv>
+         <tuv xml:lang="EL">
+            <seg>Λοίμωξη από τον ιό της ανοσολογικής ανεπάρκειας του ανθρώπου (HIV)</seg>
+         </tuv>
+         <tuv xml:lang="ES">
+            <seg>VIH, infección por el</seg>
+         </tuv>
+         <tuv xml:lang="ET">
+            <seg>HIV-nakkus</seg>
+         </tuv>
+         <tuv xml:lang="FI">
+            <seg>HIV-infektio</seg>
+         </tuv>
+         <tuv xml:lang="FR">
+            <seg>Infection à VIH</seg>
+         </tuv>
+         <tuv xml:lang="GA">
+            <seg>Ionfhabhtú VEID</seg>
+         </tuv>
+         <tuv xml:lang="HU">
+            <seg>HIV fertőzés</seg>
+         </tuv>
+         <tuv xml:lang="IS">
+            <seg>HIV smitun</seg>
+         </tuv>
+         <tuv xml:lang="IT">
+            <seg>Infezione da HIV</seg>
+         </tuv>
+         <tuv xml:lang="LT">
+            <seg>ŽIV infekcija</seg>
+         </tuv>
+         <tuv xml:lang="LV">
+            <seg>HIV infekcija</seg>
+         </tuv>
+         <tuv xml:lang="MT">
+            <seg>Infezzjoni HIV</seg>
+         </tuv>
+         <tuv xml:lang="NL">
+            <seg>Hiv-infectie</seg>
+         </tuv>
+         <tuv xml:lang="NO">
+            <seg>HIV-infeksjon</seg>
+         </tuv>
+         <tuv xml:lang="PL">
+            <seg>Zakażenie wirusem HIV</seg>
+         </tuv>
+         <tuv xml:lang="PT">
+            <seg>Infecção por VIH</seg>
+         </tuv>
+         <tuv xml:lang="RO">
+            <seg>Infecţia cu HIV</seg>
+         </tuv>
+         <tuv xml:lang="SK">
+            <seg>Infekcia HIV</seg>
+         </tuv>
+         <tuv xml:lang="SL">
+            <seg>Okužba s HIV</seg>
+         </tuv>
+         <tuv xml:lang="SV">
+            <seg>HIV-infektion</seg>
+         </tuv>
+      </tu>
+      <tu>
+         <tuv xml:lang="EN">
+            <seg>The human immunodeficiency virus (HIV) remains one of the most important communicable diseases in Europe.</seg>
+         </tuv>
+         <tuv xml:lang="BG">
+            <seg>Човешкият имунодефицитен вирус (ХИВ) остава едно от най-значимите заразни заболявания в Европа.</seg>
+         </tuv>
+         <tuv xml:lang="CS">
+            <seg>Virus lidské imunodeficience (human immunodeficiency virus, HIV) zůstává jedním z nejzávažnějších přenosných onemocnění v Evropě.</seg>
+         </tuv>
+         <tuv xml:lang="CS">
+            <seg>Virus lidské imunodeficience (human immunodeficiency virus, HIV) zůstává jedním z nejzávažnějších přenosných onemocnění v Evropě.</seg>
+         </tuv>
+         <tuv xml:lang="DA">
+            <seg>Hiv (humant immundefektvirus), er fortsat blandt de vigtigste overførbare sygdomme i Europa.</seg>
+         </tuv>
+         <tuv xml:lang="DE">
+            <seg>Das humane Immundefizienz-Virus HIV gehört weiterhin zu den bedeutendsten Infektionserregern in Europa.</seg>
+         </tuv>
+         <tuv xml:lang="EL">
+            <seg>Ο ιός της ανοσολογικής ανεπάρκειας του ανθρώπου παραμένει μία από τις πιο σημαντικές μεταδοτικές νόσους στην Ευρώπη.</seg>
+         </tuv>
+         <tuv xml:lang="ES">
+            <seg>La infección por el virus de la inmunodeficiencia humana (VIH) sigue siendo una de las enfermedades transmisibles más importantes en Europa.</seg>
+         </tuv>
+         <tuv xml:lang="ET">
+            <seg>Inimese immuunpuudulikkuse viiruse (HIV) nakkus on endiselt Euroopas üks tähtsaimaid nakkushaigusi.</seg>
+         </tuv>
+         <tuv xml:lang="FI">
+            <seg>Ihmisen immuunikatovirus (HIV) kuuluu Euroopan merkittävimpiin tartuntatauteihin.</seg>
+         </tuv>
+         <tuv xml:lang="FR">
+            <seg>L’infection par le virus de l’immunodéficience humaine (VIH) reste l’une des principales maladies contagieuses en Europe.</seg>
+         </tuv>
+         <tuv xml:lang="GA">
+            <seg>Tá an víreas easpa imdhíonachta daonna (VEID) fós ar cheann de na galair thógálacha is tábhachtaí san Eoraip.</seg>
+         </tuv>
+         <tuv xml:lang="HU">
+            <seg>A humán immunhiányos betegséget okozó vírusfertőzés (human immunodeficiency virus, HIV) továbbra is az egyik legmeghatározóbb fertőző betegség Európában.</seg>
+         </tuv>
+         <tuv xml:lang="IS">
+            <seg>Alnæmisveira í mönnum (HIV) er enn sem fyrr einn alvarlegasti smitsjúkdómurinn í Evrópu.</seg>
+         </tuv>
+         <tuv xml:lang="IT">
+            <seg>Il virus dell'immunodeficienza umana (HIV) resta una delle più importanti malattie trasmissibili in Europa.</seg>
+         </tuv>
+         <tuv xml:lang="LT">
+            <seg>Žmogaus imunodeficito virusas (ŽIV) ir toliau lieka viena iš pagrindinių užkrečiamųjų ligų Europoje.</seg>
+         </tuv>
+         <tuv xml:lang="LV">
+            <seg>Cilvēka imūndeficīta vīruss (HIV) joprojām ir viens no vissvarīgākajiem infekcijas slimību izraisītājiem Eiropā.</seg>
+         </tuv>
+         <tuv xml:lang="MT">
+            <seg>Il-virus tal-immunodefiċenza tal-bniedem (HIV) jibqa’ wieħed mill-mard li jinxtered l-aktar importanti fl-Ewropa.</seg>
+         </tuv>
+         <tuv xml:lang="NL">
+            <seg>Het humaan immunodeficiëntievirus (hiv) is nog altijd een van de belangrijkste overdraagbare ziekten in Europa.</seg>
+         </tuv>
+         <tuv xml:lang="NO">
+            <seg>Humant immunsviktvirus (HIV) er fortsatt en av de viktigste smittsomme sykdommene i Europa.</seg>
+         </tuv>
+         <tuv xml:lang="PL">
+            <seg>Ludzki wirus upośledzenia odporności (HIV) powoduje jedną z najważniejszych chorób zakaźnych w Europie.</seg>
+         </tuv>
+         <tuv xml:lang="PT">
+            <seg>O vírus da imunodeficiência humana (VIH) continua a ser uma das doenças transmissíveis mais importantes na Europa.</seg>
+         </tuv>
+         <tuv xml:lang="RO">
+            <seg>Infecţia cu virusul imunodeficienţei umane (HIV) rămâne una dintre cele mai importante boli transmisibile din Europa.</seg>
+         </tuv>
+         <tuv xml:lang="SK">
+            <seg>
+                Vírus ľudskej imunitnej nedostatočnosti (HIV) naďalej predstavuje jedno z  najvýznamnejších nákazlivých ochorení v  Európe.
+            </seg>
+         </tuv>
+         <tuv xml:lang="SL">
+            <seg>Virus humane imunske pomanjkljivosti (HIV) ostaja ena najpomembnejših nalezljivih bolezni v Evropi.</seg>
+         </tuv>
+         <tuv xml:lang="SV">
+            <seg>Humant immunbristvirus (HIV) är fortfarande en av de dominerande smittsamma sjukdomarna i Europa.</seg>
+         </tuv>
+      </tu>
+      <tu>
+         <tuv xml:lang="EN">
+            <seg>It is an infection associated with serious disease, persistently high costs of treatment and care, significant number of deaths and shortened life expectancy.</seg>
+         </tuv>
+         <tuv xml:lang="BG">
+            <seg>Тази инфекция е свързана с тежко протичаща болест, постоянно високи разходи за лечение и грижи, голям брой смъртни случаи и съкратена очаквана продължителност на живота.</seg>
+         </tuv>
+         <tuv xml:lang="CS">
+            <seg>Jde o infekci spojenou s těžkým onemocněním, s dlouhodobě vysokými náklady na léčbu a péči a s vysokým podílem úmrtí a zkrácením očekávané délky života.</seg>
+         </tuv>
+         <tuv xml:lang="DA">
+            <seg>Hiv er forbundet med alvorlig sygdom, vedvarende høje behandlings- og plejeudgifter, et betydeligt antal dødsfald og nedsat forventet levetid.</seg>
+         </tuv>
+         <tuv xml:lang="DE">
+            <seg>Eine Infektion mit diesem Virus führt zu ernsthaften Erkrankungen, dauerhaft hohen Behandlungs- und Pflegekosten, einer hohen Zahl von Todesfällen und einer verkürzten Lebenserwartung.</seg>
+         </tuv>
+         <tuv xml:lang="EL">
+            <seg>Πρόκειται για μια λοίμωξη που σχετίζεται με σοβαρή νόσο, συνεχώς αυξανόμενο κόστος θεραπείας και φροντίδας, σημαντικό ποσοστό θνησιμότητας και μείωση του προσδόκιμου επιβίωσης.</seg>
+         </tuv>
+         <tuv xml:lang="ES">
+            <seg>Se trata de una infección que se acompaña de una enfermedad grave, unos costes de tratamiento y asistencia siempre elevados, un número considerable de muertes y un acortamiento de la esperanza de vida.</seg>
+         </tuv>
+         <tuv xml:lang="ET">
+            <seg>See on nakkus, millega kaasnevad raske haigus, püsivalt suured ravi- ja hoolduskulud, suur suremus ning oodatava eluea lühenemine.</seg>
+         </tuv>
+         <tuv xml:lang="FI">
+            <seg>HIV-infektio on vakava sairaus, jonka hoitokustannukset ovat korkeat ja johon liittyy korkea kuolleisuus sekä lyhentynyt elinajanodote.</seg>
+         </tuv>
+         <tuv xml:lang="FR">
+            <seg>Cette infection est associée à une pathologie grave, à un traitement et à des soins très onéreux, à un nombre significatif de décès et à une espérance de vie réduite.</seg>
+         </tuv>
+         <tuv xml:lang="GA">
+            <seg>Is ionfhabhtú é a mbaineann galar tromchúiseach leis, chomh maith le costais cóireála agus cúraim síorarda, líon suntasach básanna agus ionchas saoil níos giorra.</seg>
+         </tuv>
+         <tuv xml:lang="HU">
+            <seg>Ez egy olyan súlyos betegséget okozó fertőzés, amely folyamatosan magas kezelési és gondozási költségekkel, jelentős számú halálesettel és a várható élettartam megrövidülésével jár.</seg>
+         </tuv>
+         <tuv xml:lang="IS">
+            <seg>HIV smitun veldur illvígum sjúkdómum, hefur í för með sér gríðarmikil og langvarandi útgjöld, kostar mörg mannslíf og skerðir lífslíkur.</seg>
+         </tuv>
+         <tuv xml:lang="IT">
+            <seg>Si tratta di un'infezione associata a malattia grave, costi di terapia e assistenza persistentemente alti, un considerevole numero di decessi e una ridotta aspettativa di vita.</seg>
+         </tuv>
+         <tuv xml:lang="LT">
+            <seg>Tai infekcija, sukelianti sunkius susirgimus, pareikalaujanti didelių nuolatinių gydymo ir priežiūros išlaidų, sukelianti daug mirčių ir sutrumpinanti gyvenimo trukmę.</seg>
+         </tuv>
+         <tuv xml:lang="LV">
+            <seg>Tā ir infekcija, kas saistīta ar nopietnu slimību, noturīgi augstām ārstēšanas un aprūpes izmaksām, nozīmīgi lielu nāves gadījumu skaitu un saīsinātu dzīvildzi.</seg>
+         </tuv>
+         <tuv xml:lang="MT">
+            <seg>
+                Dan huwa infezzjoni assoċjata ma’  mard serju, 
+                spejjeż 
+                għoljin persistenti ta’  trattament u kura, numru sinifikanti ta’  mwiet u għomor imnaqqas.
+            </seg>
+         </tuv>
+         <tuv xml:lang="NL">
+            <seg>Het is een infectie die gepaard gaat met ernstige ziekte, blijvend hoge kosten voor behandeling en zorg, een aanzienlijk aantal sterfgevallen en een kortere levensverwachting.</seg>
+         </tuv>
+         <tuv xml:lang="NO">
+            <seg>Infeksjonen assosieres med alvorlig sykdom, gjennomgående høye kostnader til behandling og pleie, høy dødelighet og kortere forventet levetid.</seg>
+         </tuv>
+         <tuv xml:lang="PL">
+            <seg>Jest to zakażenie wiążące się z poważną chorobą, stałymi wysokimi kosztami leczenia i opieki, znaczną liczbą zgonów i skróconym oczekiwanym czasem przeżycia.</seg>
+         </tuv>
+         <tuv xml:lang="PT">
+            <seg>Trata-se de uma infecção associada a uma doença grave, a elevados custos de tratamento e de cuidados de saúde, a um número significativo de mortes e a uma diminuição da esperança de vida.</seg>
+         </tuv>
+         <tuv xml:lang="RO">
+            <seg>Este o infecţie asociată cu o boală gravă, costuri de tratament şi îngrijire constant ridicate, un număr semnificativ de decese şi o speranţă redusă de viaţă.</seg>
+         </tuv>
+         <tuv xml:lang="SK">
+            <seg>
+                Je to infekcia spojená s  ťažkou chorobou, trvalo vysokými nákladmi na liečbu a  starostlivosť, značným počtom úmrtí a  kratšou očakávanou dĺžkou života.
+            </seg>
+         </tuv>
+         <tuv xml:lang="SL">
+            <seg>Gre za okužbo, ki je povezana s hudo boleznijo, trajno visokimi stroški zdravljenja in nege, visoko stopnjo umrljivosti in krajšo življenjsko dobo.</seg>
+         </tuv>
+         <tuv xml:lang="SV">
+            <seg>HIV-infektion är kopplad till allvarlig sjukdom, långvariga och höga kostnader för behandling och vård, ett betydande antal dödsfall samt kortare förväntad livslängd.</seg>
+         </tuv>
+      </tu>
+      <tu>
+         <tuv xml:lang="EN">
+            <seg>HIV is a virus, which attacks the immune system and causes a lifelong severe illness with a long incubation period.</seg>
+         </tuv>
+         <tuv xml:lang="BG">
+            <seg>ХИВ атакува имунната система и причинява доживотна тежка болест с дълъг инкубационен период.</seg>
+         </tuv>
+         <tuv xml:lang="CS">
+            <seg>HIV je virus, který napadá imunitní systém a způsobuje závažné celoživotní onemocnění s dlouhou inkubační dobou.</seg>
+         </tuv>
+         <tuv xml:lang="DA">
+            <seg>HIV er et virus, der angriber immunsystemet og medfører livslang alvorlig sygdom. Inkubationstiden er lang.</seg>
+         </tuv>
+         <tuv xml:lang="DE">
+            <seg>HIV ist ein Virus, das das Immunsystem angreift und nach einer langen Inkubationszeit eine lebenslange schwere Krankheit hervorruft.</seg>
+         </tuv>
+         <tuv xml:lang="EL">
+            <seg>O HIV είναι ένας ιός με μακρά περίοδο επώασης ο οποίος προσβάλλει το ανοσοποιητικό σύστημα και προκαλεί χρόνια σοβαρή νόσο.</seg>
+         </tuv>
+         <tuv xml:lang="ES">
+            <seg>El VIH es un virus que ataca al sistema inmunitario y provoca una enfermedad grave de por vida que tiene un período de incubación prolongado.</seg>
+         </tuv>
+         <tuv xml:lang="ET">
+            <seg>HIV on viirus, mis ründab immuunsüsteemi ning põhjustab raskekujulise ja pika peiteajaga haiguse kogu eluks.</seg>
+         </tuv>
+         <tuv xml:lang="FI">
+            <seg>HIV on virus, joka hyökkää immuunijärjestelmää vastaan ja aiheuttaa pitkän itämisajan jälkeen elinikäisen vakavan sairauden.</seg>
+         </tuv>
+         <tuv xml:lang="FR">
+            <seg>Le VIH est un virus qui s’attaque au système immunitaire et provoque une maladie grave à vie associée à une longue période d’incubation.</seg>
+         </tuv>
+         <tuv xml:lang="GA">
+            <seg>Is víreas é VEID, a dhéanann ionsaí ar an gcóras imdhíonachta agus a chruthaíonn géarbhreoiteacht ar feadh an tsaoil le tréimhse ghoir fhada.</seg>
+         </tuv>
+         <tuv xml:lang="HU">
+            <seg>A HIV egy vírus, amely az immunrendszert támadja meg, és hosszú inkubációs időt követően egész életen át tartó súlyos betegséget okoz.</seg>
+         </tuv>
+         <tuv xml:lang="IS">
+            <seg>HIV er veira sem ræðst á ónæmiskerfið og veldur miklum og ólæknandi veikindum eftir langan sóttdvala.</seg>
+         </tuv>
+         <tuv xml:lang="IT">
+            <seg>L’HIV è un virus che attacca il sistema immunitario e produce, dopo un lungo periodo di incubazione, una sindrome grave che dura tutta la vita.</seg>
+         </tuv>
+         <tuv xml:lang="LT">
+            <seg>ŽIV yra virusas, pažeidžiantis organizmo imuninę sistemą ir sukeliantis nepagydomą sunkią ligą, turinčią ilgą inkubacinį laikotarpį.</seg>
+         </tuv>
+         <tuv xml:lang="LV">
+            <seg>HIV ir vīruss, kas uzbrūk imūnsistēmai un izsauc smagu slimību mūža garumā ar ilgu inkubācijas periodu.</seg>
+         </tuv>
+         <tuv xml:lang="MT">
+            <seg>L-HIV hu virus, li jattakka s-sistema immunitarja u jikkawża mard sever tul il-ħajja b'perijodu twil ta' inkubazzjoni.</seg>
+         </tuv>
+         <tuv xml:lang="NL">
+            <seg>Hiv is een virus dat het afweersysteem aanvalt en een levenslange ernstige ziekte veroorzaakt met een lange incubatietijd.</seg>
+         </tuv>
+         <tuv xml:lang="NO">
+            <seg>HIV er et virus som angriper immunsystemet og forårsaker en livsvarig, alvorlig sykdom med lang inkubasjonstid.</seg>
+         </tuv>
+         <tuv xml:lang="PL">
+            <seg>HIV jest wirusem, który atakuje układ odpornościowy i wywołuje ciężką, trwającą przez całe życie chorobę o długim okresie inkubacji.`</seg>
+         </tuv>
+         <tuv xml:lang="PT">
+            <seg>O VIH é um vírus que ataca o sistema imunitário e que provoca uma doença grave, para toda a vida, com um longo período de incubação.</seg>
+         </tuv>
+         <tuv xml:lang="RO">
+            <seg>HIV este un virus care atacă sistemul imunitar şi determină apariţia unei boli grave care durează toată viaţa cu o durată lungă de incubaţie.</seg>
+         </tuv>
+         <tuv xml:lang="SK">
+            <seg>HIV je vírus, ktorý útočí na imunitný systém a spôsobuje celoživotné ťažké ochorenie s dlhou inkubačnou dobou.</seg>
+         </tuv>
+         <tuv xml:lang="SL">
+            <seg>HIV je virus, ki napada imunski sistem in povzroča doživljenjsko hudo bolezen z dolgo inkubacijsko dobo.</seg>
+         </tuv>
+         <tuv xml:lang="SV">
+            <seg>HIV är ett virus som angriper immunförsvaret och leder till livslång allvarlig sjukdom med lång inkubationstid.</seg>
+         </tuv>
+      </tu>
+      <tu>
+         <tuv xml:lang="EN">
+            <seg>HIV is spread by sexual contact with an infected person, by sharing needles or syringes (primarily for drug injection) with someone who is infected, or, less commonly (and now very rarely in countries where blood is screened for HIV antibodies), through transfusions of infected blood or blood clotting factors.</seg>
+         </tuv>
+         <tuv xml:lang="BG">
+            <seg>Разпространява се чрез сексуален контакт с инфектиран индивид, чрез игли или спринцовки (главно за инжектиране на наркотици), използвани от инфектиран, или по-рядко (и днес много рядко в страни, където кръвта се изследва за ХИВ антитела) чрез преливания на инфектирана кръв или фактори на кръвосъсирването.</seg>
+         </tuv>
+         <tuv xml:lang="CS">
+            <seg>HIV se šíří pohlavním stykem s nakaženou osobou, půjčováním jehel nebo stříkaček (zejména při aplikaci drog injekční cestou) s nakaženou osobou, nebo – méně často –transfuzí infikované krve nebo faktorů krevní srážlivosti (což je v současnosti velice zřídkavé v zemích, kde se provádí screening krve na protilátky proti HIV).</seg>
+         </tuv>
+         <tuv xml:lang="CS">
+            <seg>
+                HIV se šíří pohlavním stykem s  nakaženou osobou, půjčováním jehel nebo stříkaček (zejména při aplikaci drog injekční cestou) s  nakaženou osobou, nebo –  méně často – transfuzí infikované krve nebo faktorů krevní srážlivosti (což je v současnosti velice vzácné v zemích, kde se provádí vyšetřování krve na protilátky proti HIV).
+            </seg>
+         </tuv>
+         <tuv xml:lang="DA">
+            <seg>
+                Hiv spredes ved seksuel omgang med en smittet person, når raske personer deler nåle eller sprøjter med en smittet person (hovedsagelig narkomaner) eller 
+                − 
+                mindre ofte (og nu meget sjældent i lande, hvor blod screenes for hiv-antistoffer) 
+                − 
+                ved transfusion af inficeret blod eller blodkoagulationsfaktorer.
+            </seg>
+         </tuv>
+         <tuv xml:lang="DE">
+            <seg>HIV wird übertragen durch den sexuellen Kontakt zu einer infizierten Person, die gemeinsame Benutzung von Nadeln oder Spritzen (vor allem beim Spritzen von Drogen) mit einer infizierten Person oder, seltener (und inzwischen äußerst selten in Ländern, wo Spenderblut auf HIV-Antikörper untersucht wird), durch Transfusionen von infiziertem Blut oder infizierten Blutgerinnungsfaktoren.</seg>
+         </tuv>
+         <tuv xml:lang="EL">
+            <seg>Ο HIV μεταδίδεται μέσω της σεξουαλικής επαφής με μολυσμένο άτομο, της κοινής χρήσης βελονών ή συριγγών (κυρίως ενέσιμα ναρκωτικά) με κάποιον που έχει μολυνθεί από τον ιό ή, λιγότερο συχνά (και πλέον πολύ σπάνια σε χώρες όπου το αίμα εξετάζεται για την ύπαρξη αντισωμάτων του HIV), μέσω μετάγγισης μολυσμένου αίματος ή παραγόντων πήξης του αίματος.</seg>
+         </tuv>
+         <tuv xml:lang="ES">
+            <seg>El VIH se contagia por contacto sexual con una persona infectada, por compartir agujas o jeringuillas (sobre todo para inyectarse drogas) con alguien infectado o, con menos frecuencia (y, ahora, muy rara vez en los países en que se realiza un cribado de anticuerpos contra el VIH en la sangre), a través de transfusiones de sangre o factores de coagulación infectados.</seg>
+         </tuv>
+         <tuv xml:lang="ET">
+            <seg>HIV levib seksuaalse kokkupuute kaudu nakatunud isikuga, nõelte või süstalde ühise kasutamise kaudu (eelkõige narkootikumide süstimiseks) nakatunud isikuga või harvemini (ja riikides, kus veres HIV antikehade olemasolu kontrollitakse, juba väga harva) nakatunud vere või hüübimistegurite ülekandmise teel.</seg>
+         </tuv>
+         <tuv xml:lang="ET">
+            <seg>HIV levib sugulise kokkupuute kaudu nakatunud isikuga, temaga nõelte või süstalde ühise kasutamise kaudu (eelkõige narkootikumide süstimisel) või harvemini (ja riikides, kus veres HIV antikehade olemasolu kontrollitakse, juba väga harva) nakatunud vere või nakatunud hüübimistegurite ülekandmise teel.</seg>
+         </tuv>
+         <tuv xml:lang="FI">
+            <seg>HIV leviää sukupuoliyhdynnässä tartunnan saaneelta henkilöltä, neulojen tai ruiskujen yhteiskäytössä (lähinnä huumeiden injektiokäytössä) tartunnan saaneelta henkilöltä tai harvemmin (ja nykyään hyvin harvoin maissa, joissa verestä testataan HIV:n vasta-aineet) veren tai sen hyytymistekijöiden siirrossa tartunnan saaneelta henkilöltä.</seg>
+         </tuv>
+         <tuv xml:lang="FR">
+            <seg>Le VIH se transmet lors de relations sexuelles avec une personne infectée, par le partage d’aiguilles ou de seringues (essentiellement pour l’injection de drogue) avec une personne infectée ou, plus rarement (et maintenant très rarement dans les pays où le dépistage des anticorps anti-VIH est effectué), par la transfusion de sang ou de facteurs de coagulation infectés.</seg>
+         </tuv>
+         <tuv xml:lang="HU">
+            <seg>A HIV fertőzött személlyel történő nemi érintkezés útján, az injekciós tű vagy fecskendő fertőzött személlyel (elsősorban kábítószer beadása céljából) történő megosztásával vagy kevésbé gyakran (és most már nagyon ritkán azokban az országokban, ahol a vért HIV antitestekre szűrik) fertőzött vér vagy véralvadási faktorok transzfúziójával terjed.</seg>
+         </tuv>
+         <tuv xml:lang="IS">
+            <seg>HIV dreifist með kynmökum við smitaðan einstakling og ennfremur, en þó síður (og nú orðið mjög sjaldan i löndum þar sem blóð er skimað fyrir HIV mótefnum), þegar sýktir og ósýktir einstaklingar nota sömu nál eða sprautu (aðallega til að sprauta i sig eiturlyfjum), eða þegar gefið er sýkt blóð eða blóðstorkuþættir.</seg>
+         </tuv>
+         <tuv xml:lang="IS">
+            <seg>HIV dreifist með kynmökum við smitaðan einstakling, þegar sýktir og ósýktir einstaklingar nota sömu nál eða sprautu (aðallega til að sprauta í sig eiturlyfjum) og ennfremur, en þó síður (og nú orðið mjög sjaldan i löndum þar sem blóð er skimað fyrir HIV mótefnum), þegar gefið er sýkt blóð eða blóðstorkuþættir.</seg>
+         </tuv>
+         <tuv xml:lang="IT">
+            <seg>Si trasmette attraverso il contatto sessuale con una persona infetta, la condivisione di aghi o siringhe (usate soprattutto per iniettare droga) con individui infetti; meno comunemente (e molto di rado ora in paesi dove il sangue è sottoposto a screening per la ricerca di anticorpi anti-HIV), il virus può essere trasmesso attraverso trasfusione di sangue o fattori coagulanti infetti.</seg>
+         </tuv>
+         <tuv xml:lang="LT">
+            <seg>ŽIV plinta per lytinius santykius su infekuotu asmeniu, dalijantis adatomis ir švirkštais (visų pirma narkotikų injekcijoms) su infekuotu asmeniu, rečiau (šiuo metu labai retai tose šalyse, kuriose kraujas tikrinamas dėl ŽIV antikūnų) per kraują ir jo preparatus perpilant kraują.</seg>
+         </tuv>
+         <tuv xml:lang="LV">
+            <seg>HIV izplatās dzimumkontaktos ar inficētu personu, lietojot kopīgas injekciju adatas vai šļirces (galvenokārt narkotiku injicēšanai) ar kādu, kas ir inficēts, vai, retāk (un pašlaik ļoti reti valstīs, kurās asinis pārbauda uz HIV antivielām) ar inficētu asiņu vai asins recēšanas faktoru pārliešanu.</seg>
+         </tuv>
+         <tuv xml:lang="MT">
+            <seg>
+                L-HIV jinxtered permezz ta’  kuntatt sesswali ma’  persuna infettata, permezz ta’  kondiviżjoni
+                 ta’  labar jew siringi (primarjament għall-injezzjoni tad-droga) ma’  xi ħadd li huwa infettat, jew, inqas komuni (u issa rarament fil-
+                pajjiżi fejn id-demm huwa eżaminat għall-antikorpi tal-
+                HIV), permezz
+                 ta’  trasfużjoni ta’  demm infettat jew 
+                ta’  fatturi li jgħaqqdu d-demm.
+            </seg>
+         </tuv>
+         <tuv xml:lang="NL">
+            <seg>
+                Hiv wordt verspreid via seksueel contact met een geïnfecteerde persoon, door het delen van naalden of injectiespuiten (voornamelijk voor het injecteren van drugs) met een geïnfecteerde persoon of –  
+               
+                minder vaak (en in landen waar bloed op hiv-antilichamen wordt getest inmiddels zeer zelden) –  
+               
+                via transfusies met geïnfecteerd bloed of geïnfecteerde bloedstollingsfactoren.
+            </seg>
+         </tuv>
+         <tuv xml:lang="NO">
+            <seg>HIV spres gjennom seksuell omgang med en smittet person, ved å dele sprøyter eller sprøytespisser (hovedsakelig ved sprøytemisbruk av narkotika) med noen som er smittet eller ikke fullt så ofte gjennom blodoverføring med infisert blod eller blodlevringsfaktorer (dette er nå svært sjeldent i land hvor blodet screenes for HIV-antistoffer).</seg>
+         </tuv>
+         <tuv xml:lang="NO">
+            <seg>HIV spres gjennom seksuell omgang med en smittet person, ved å dele sprøyter eller sprøytespisser (hovedsakelig ved sprøytebruk av narkotika) med noen som er smittet, og gjennom blodoverføring med infisert blod eller blodlevringsfaktorer (dette er nå svært sjeldent i land hvor blodet screenes for HIV-antistoffer).</seg>
+         </tuv>
+         <tuv xml:lang="PL">
+            <seg>
+                Wirus HIV przenoszony jest przez kontakty płciowe z zakażoną osobą, używanie wraz z zakażoną osobą wspólnych igieł lub strzykawek (głównie w celu wstrzykiwania narkotyków) lub –  rzadziej (a obecnie bardzo rzadko w krajach, gdzie prowadzi się badania przesiewowe krwi pod kątem przeciwciał skierowanych przeciwko HIV) –  przez przetoczenie zakażonych czynników krzepnięcia krwi albo samej krwi.
+            </seg>
+         </tuv>
+         <tuv xml:lang="PT">
+            <seg>O VIH transmite-se por contacto sexual com uma pessoa infectada, pela partilha de agulhas ou seringas (principalmente para injecção de drogas) com uma pessoa infectada ou, de forma menos frequente (e, actualmente, de forma muito rara em países onde o sangue é analisado para detectar a presença de anticorpos anti-VIH), através de transfusões de sangue ou de factores de coagulação infectados.</seg>
+         </tuv>
+         <tuv xml:lang="RO">
+            <seg>HIV se transmite prin contact sexual cu o persoană infectată, prin utilizarea în comun cu o persoană infectată a acelor sau seringilor (în special pentru injectarea drogurilor) sau, în cazuri mai puţin frecvente (iar în prezent foarte rar în ţările în care se efectuează analize de sânge pentru depistarea anticorpilor HIV), prin transfuzii cu sânge infectat sau factori de coagulare a sângelui care conţin virusul.</seg>
+         </tuv>
+         <tuv xml:lang="SK">
+            <seg>
+                HIV sa šíri pohlavným stykom s infikovanou osobou, spoločným používaním ihiel alebo  striekačiek (predovšetkým na vpichovanie drog) s  ďalšou nakazenou osobou, alebo menej bežne (a v  krajinách, kde sa kontroluje prítomnosť protilátok HIV v  krvi teraz len zriedkavo) prostredníctvom transfúzie infikovanej krvi alebo činiteľov zrážanlivosti krvi.
+            </seg>
+         </tuv>
+         <tuv xml:lang="SL">
+            <seg>HIV se širi s spolnim stikom z okuženo osebo, z izmenjavo igel ali brizg (zlasti za injiciranje droge) z okuženo osebo ali manj pogosteje (in danes zelo redko v državah, v katerih se kri testira na prisotnost protiteles HIV) s transfuzijo okužene krvi ali koagulacijskih faktorjev.</seg>
+         </tuv>
+         <tuv xml:lang="SV">
+            <seg>HIV sprids genom sexuell kontakt med smittade personer, genom delning av sprutor (främst för injektion av droger) med någon som är smittad eller, vilket är mindre vanligt (och nu mycket sällsynt i länder där blod screenas för HIV-antikroppar), genom transfusioner av smittat blod eller smittade blodkoagulationsfaktorer.</seg>
+         </tuv>
+      </tu>
+      <tu>
+         <tuv xml:lang="EN">
+            <seg>Babies born to HIV-infected women may become infected before or during birth or through breast-feeding.</seg>
+         </tuv>
+         <tuv xml:lang="BG">
+            <seg>Бебетата на инфектирани с ХИВ жени могат да се заразят преди или по време на раждането, или при кърмене.</seg>
+         </tuv>
+         <tuv xml:lang="CS">
+            <seg>Děti narozené ženám infikovaným HIV se mohou nakazit před narozením, při porodu nebo při kojení.</seg>
+         </tuv>
+         <tuv xml:lang="DA">
+            <seg>Spædbørn født af hiv-smittede kvinder kan blive smittet før eller under fødslen eller ved amning.</seg>
+         </tuv>
+         <tuv xml:lang="DE">
+            <seg>Babys von HIV-infizierten Müttern können vor oder während der Geburt oder beim Stillen infiziert werden.</seg>
+         </tuv>
+         <tuv xml:lang="EL">
+            <seg>Τα βρέφη που γεννιούνται από μητέρες μολυσμένες με τον ιό HIV ενδέχεται να μολυνθούν πριν ή κατά τη διάρκεια του τοκετού ή με τον θηλασμό.</seg>
+         </tuv>
+         <tuv xml:lang="ES">
+            <seg>Los niños nacidos de mujeres infectadas por el VIH pueden resultar infectados antes de nacer, durante el parto o a través de la lactancia natural.</seg>
+         </tuv>
+         <tuv xml:lang="ET">
+            <seg>HIV-nakkusega emade lapsed võivad nakatuda enne sündi, sündimisel või emapiima kaudu.</seg>
+         </tuv>
+         <tuv xml:lang="FI">
+            <seg>HIV-infektion saaneiden äitien lapset voivat saada tartunnan raskauden aikana, synnytyksessä tai imetyksen kautta.</seg>
+         </tuv>
+         <tuv xml:lang="FR">
+            <seg>Les enfants de femmes infectées par le VIH peuvent être infectés avant ou pendant l’accouchement, ou par l’allaitement.</seg>
+         </tuv>
+         <tuv xml:lang="GA">
+            <seg>D'fhéadfadh leanaí a bheirtear do mhná a bhfuil ionfhabhtú VEID orthu a bheith ionfhabhtaithe sula dtagann siad ar an saol nó le linn na breithe nó tríd an mbeathú cíche.</seg>
+         </tuv>
+         <tuv xml:lang="HU">
+            <seg>A HIV fertőzött anyáktól született csecsemők a születés előtt vagy közben, illetve szoptatás útján fertőződhetnek meg.</seg>
+         </tuv>
+         <tuv xml:lang="IS">
+            <seg>Börn HIV smitaðra mæðra geta smitast í móðurkviði, í fæðingunni eða við brjóstagjöf.</seg>
+         </tuv>
+         <tuv xml:lang="IT">
+            <seg>I bambini che nascono da madri con infezione da HIV possono contagiarsi prima o durante il parto o attraverso l'allattamento al seno.</seg>
+         </tuv>
+         <tuv xml:lang="LT">
+            <seg>Kūdikiai, pagimdyti ŽIV infekuotų moterų, gali užsikrėsti virusu iki gimdymo, gimdant ar žindant.</seg>
+         </tuv>
+         <tuv xml:lang="LV">
+            <seg>Bērni, kuri piedzimuši HIV inficētām sievietēm, var inficēties pirms dzimšanas, dzemdībās vai laikā, kad notiek barošana ar krūti.</seg>
+         </tuv>
+         <tuv xml:lang="MT">
+            <seg>Trabi li jitwieldu minn nisa li huma infettati bl-HIV jistgħu jiġu nfettati qabel jew waqt it-twelid jew permezz tad-treddigħ.</seg>
+         </tuv>
+         <tuv xml:lang="NL">
+            <seg>Baby's van met hiv besmette vrouwen kunnen voor of tijdens de geboorte of via moedermelk worden besmet.</seg>
+         </tuv>
+         <tuv xml:lang="NO">
+            <seg>Barn som fødes av HIV-smittede kvinner, kan bli smittet før eller under fødselen eller gjennom ammingen.</seg>
+         </tuv>
+         <tuv xml:lang="NO">
+            <seg>Barn som fødes av HIV-smittede kvinner, kan bli smittet før eller under fødselen eller gjennom amming.</seg>
+         </tuv>
+         <tuv xml:lang="PL">
+            <seg>Dzieci kobiet zakażonych wirusem HIV mogą ulec zakażeniu przed porodem, podczas porodu lub w wyniku karmienia piersią.</seg>
+         </tuv>
+         <tuv xml:lang="PT">
+            <seg>Os filhos de mulheres infectadas com o VIH podem ficar infectados antes ou durante o nascimento ou através da amamentação.</seg>
+         </tuv>
+         <tuv xml:lang="RO">
+            <seg>Copiii născuţi de femei infectate cu HIV pot dobândi, la rândul lor, infecţia înainte sau în timpul naşterii sau prin alăptare.</seg>
+         </tuv>
+         <tuv xml:lang="SK">
+            <seg>Deti narodené ženám infikovaným vírusom HIV sa môžu nakaziť pred narodením, počas pôrodu alebo pri dojčení.</seg>
+         </tuv>
+         <tuv xml:lang="SL">
+            <seg>Dojenčki, ki so jih rodile ženske, okužene s HIV, se lahko okužijo pred ali med porodom ali z dojenjem.</seg>
+         </tuv>
+         <tuv xml:lang="SV">
+            <seg>Barn som föds av HIV-smittade mödrar kan smittas före eller under födseln eller genom amningen.</seg>
+         </tuv>
+      </tu>
+      <tu>
+         <tuv xml:lang="EN">
+            <seg>The end-stage of the infection, acquired immunodeficiency syndrome (AIDS), results from the destruction of the immune system.</seg>
+         </tuv>
+         <tuv xml:lang="BG">
+            <seg>
+                Крайната фаза на инфекцията –  синдром на придобита имунна недостатъчност (СПИН) –  настъпва в резултат от разрушаването на имунната система.
+            </seg>
+         </tuv>
+         <tuv xml:lang="CS">
+            <seg>Konečné stadium infekce, syndrom získané imunodeficience (acquired immunodeficiency syndrome, AIDS), je následkem destrukce imunitního systému.</seg>
+         </tuv>
+         <tuv xml:lang="DA">
+            <seg>Slutstadiet i infektionen, aids (erhvervet immundefektsyndrom), skyldes ødelæggelsen af immunsystemet.</seg>
+         </tuv>
+         <tuv xml:lang="DE">
+            <seg>Das Endstadium der Infektion ist die AIDS-Krankheit, ein erworbenes Immundefektsyndrom, das durch die Zerstörung des Immunsystems entsteht.</seg>
+         </tuv>
+         <tuv xml:lang="EL">
+            <seg>Το τελικό στάδιο της λοίμωξης, το σύνδροµο επίκτητης ανοσολογικής ανεπάρκειας (AIDS), προκαλείται από την κατάπτωση του ανοσοποιητικού συστήματος.</seg>
+         </tuv>
+         <tuv xml:lang="ES">
+            <seg>La fase final de la infección, el síndrome de inmunodeficiencia adquirida (SIDA), es consecuencia de la destrucción del sistema inmunitario.</seg>
+         </tuv>
+         <tuv xml:lang="ET">
+            <seg>Nakkuse lõppstaadium, omandatud immuunpuudulikkuse sündroom (AIDS) tuleneb immuunsüsteemi hävimisest.</seg>
+         </tuv>
+         <tuv xml:lang="FI">
+            <seg>Infektion loppuvaihe, hankinnainen immuunivajavuus (AIDS), seuraa immuunijärjestelmän romahtamista.</seg>
+         </tuv>
+         <tuv xml:lang="FR">
+            <seg>Le stade final de l’infection, le syndrome d’immunodéficience acquise (SIDA), est dû à la destruction du système immunitaire.</seg>
+         </tuv>
+         <tuv xml:lang="GA">
+            <seg>Tarlaíonn staid deiridh an ionfhabhtaithe, siondróm easpa imdhíonachta faighte (SEIF), de thoradh an chóras imdhíonachta a bheith scriosta.</seg>
+         </tuv>
+         <tuv xml:lang="HU">
+            <seg>A fertőzés végfázisa, a szerzett immunhiányos betegség (acquired immunodeficiency syndrome, AIDS) az immunrendszer leépülésének az eredménye.</seg>
+         </tuv>
+         <tuv xml:lang="IS">
+            <seg>Lokastigið eyðni (AIDS) stafar af hruni ónæmiskerfisins.</seg>
+         </tuv>
+         <tuv xml:lang="IT">
+            <seg>Lo stadio finale dell'infezione, la sindrome da immunodeficienza acquisita (AIDS), è il risultato della distruzione del sistema immunitario.</seg>
+         </tuv>
+         <tuv xml:lang="LT">
+            <seg>
+                ŽIV infekcija sugriauna imuninę sistemą, o šios infekcijos paskutinė stadija –  įgytas imuniteto nepakankamumo sindromas (AIDS).
+            </seg>
+         </tuv>
+         <tuv xml:lang="LV">
+            <seg>Infekcijas beigu stadija, iegūtais imūndeficīta sindroms (AIDS), ir imūnsistēmas sagraušanas rezultāts.</seg>
+         </tuv>
+         <tuv xml:lang="MT">
+            <seg>
+                L-aħħar stadju tal-infezzjoni, is-sindromu tal-immunodefiċenza akkwistata (AIDS), j
+                irriżulta mi
+                ll-qerda tas-sistema immuni.
+            </seg>
+         </tuv>
+         <tuv xml:lang="NL">
+            <seg>Het eindstadium van de infectie, 'acquired immunodeficiency syndrome' (aids), is het gevolg van de vernietiging van het afweersysteem.</seg>
+         </tuv>
+         <tuv xml:lang="NO">
+            <seg>Siste stadium av infeksjonen, AIDS (acquired immunodeficiency syndrome, eller ervervet immunsviktsyndrom), skyldes at immunsystemet er ødelagt.</seg>
+         </tuv>
+         <tuv xml:lang="NO">
+            <seg>Siste stadium av infeksjonen, AIDS (acquired immunodeficiency syndrome, eller ervervet immunsviktsyndrom), skyldes at immunforsvaret er ødelagt.</seg>
+         </tuv>
+         <tuv xml:lang="PL">
+            <seg>Końcowy etap zakażenia, określany jako nabyty zespół upośledzenia odporności (AIDS), wynika ze zniszczenia układu odpornościowego.</seg>
+         </tuv>
+         <tuv xml:lang="PT">
+            <seg>A fase final da infecção, a Síndrome da Imunodeficiência Adquirida (SIDA), resulta da destruição do sistema imunitário.</seg>
+         </tuv>
+         <tuv xml:lang="RO">
+            <seg>Stadiul terminal al infecţiei, sindromul imunodeficienţei dobândite (SIDA), apare în urma distrugerii sistemului imunitar.</seg>
+         </tuv>
+         <tuv xml:lang="SK">
+            <seg>
+                Konečné štádium infekcie, syndróm získanej imunitnej nedostatočnosti (AIDS), vyplýva z  deštrukcie imunitného systému.
+            </seg>
+         </tuv>
+         <tuv xml:lang="SL">
+            <seg>Končna stopnja okužbe, imenovana sindrom pridobljene imunske pomanjkljivosti (aids), je posledica uničenja imunskega sistema.</seg>
+         </tuv>
+         <tuv xml:lang="SV">
+            <seg>Infektionens slutstadium, förvärvat immunbristsyndrom (aids), är en följd av att immunsystemet har brutits ned.</seg>
+         </tuv>
+      </tu>
+      <tu>
+         <tuv xml:lang="EN">
+            <seg>AIDS is defined by the presence of one or more “opportunistic” illnesses (other illnesses due to decreased immunity).</seg>
+         </tuv>
+         <tuv xml:lang="BG">
+            <seg>СПИН се дефинира от наличието на една или повече “опортюнистични” болести (други болести в резултат от отслабен имунитет).</seg>
+         </tuv>
+         <tuv xml:lang="CS">
+            <seg>AIDS je definován na základě přítomnosti jedné nebo více „oportunních“ nemocí (dalších nemocí způsobených snížením imunity).</seg>
+         </tuv>
+         <tuv xml:lang="DA">
+            <seg>Aids er kendetegnet ved tilstedeværelsen af en eller flere "opportunistiske" infektioner (andre sygdomme, som skyldes svækkelsen af immunforsvaret).</seg>
+         </tuv>
+         <tuv xml:lang="DE">
+            <seg>AIDS ist definiert als das Vorhandensein einer oder mehrerer opportunistischer Krankheiten, das heißt Krankheiten, die sich aufgrund des geschwächten Immunsystems entwickeln konnten.</seg>
+         </tuv>
+         <tuv xml:lang="EL">
+            <seg>Το AIDS προσδιορίζεται από την ύπαρξη μίας ή περισσοτέρων «ευκαιριακών» νόσων (άλλες νόσοι που οφείλονται στη μειωμένη απόκριση του ανοσοποιητικού συστήματος).</seg>
+         </tuv>
+         <tuv xml:lang="ES">
+            <seg>El SIDA se define por la presencia de una o más enfermedades «oportunistas» (enfermedades que se contraen debido a un debilitamiento de la inmunidad).</seg>
+         </tuv>
+         <tuv xml:lang="ET">
+            <seg>AIDSi määratletakse ühe või mitme oportunistliku haiguse (immuunsuse vähenemisest põhjustatud muud haigused) olemasoluna.</seg>
+         </tuv>
+         <tuv xml:lang="FI">
+            <seg>AIDS määritellään yhden tai usean "opportunistisen" sairauden (immuniteetin heikentymisestä johtuvan muun sairauden) esiintymiseksi.</seg>
+         </tuv>
+         <tuv xml:lang="FR">
+            <seg>Le SIDA se caractérise par la présence d’une ou plusieurs maladies «opportunistes» (autres maladies dues à la diminution de l’immunité).</seg>
+         </tuv>
+         <tuv xml:lang="GA">
+            <seg>Tá SEIF sainithe ag láithreacht cheann amháin nó níos mó de bhreoiteachtaí “faille” (breoiteachtaí eile toisc imdhíonacht laghdaithe).</seg>
+         </tuv>
+         <tuv xml:lang="HU">
+            <seg>Az AIDS megállapítása egy vagy több „opportunista” fertőzés (a csökkent immunitás következtében fellépő más betegségek) megjelenésével történik.</seg>
+         </tuv>
+         <tuv xml:lang="IS">
+            <seg>Samkvæmt skilgreiningu hefst eyðnistigið þegar einstaklingurinn sýkist af einum eða fleiri sjúkdómum sem áður þurfti ekki að óttast, en valda miklum usla þegar ónæmið þverr.</seg>
+         </tuv>
+         <tuv xml:lang="IT">
+            <seg>L'AIDS è definita dalla presenza di una o più malattie "opportunistiche" (ossia altre malattie che si sviluppano a causa della ridotta capacità immunitaria).</seg>
+         </tuv>
+         <tuv xml:lang="LT">
+            <seg>AIDS pasireiškia viena ar keliomis oportunistinėmis infekcijomis (susirgimai, išsivystantys dėl sumažėjusio imuniteto).</seg>
+         </tuv>
+         <tuv xml:lang="LV">
+            <seg>AIDS definē ar vienas vai vairāku „oportūnistisko” slimību klātbūtni. Tās ir citas slimības, kas rodas dēļ samazinātas imunitātes.</seg>
+         </tuv>
+         <tuv xml:lang="MT">
+            <seg>
+                L-AIDS huwa 
+                definit mill-preżenza ta’  marda “opportunista” waħda jew aktar (mard ieħor 
+                riżultat ta
+                l-immunità mnaqqsa).
+            </seg>
+         </tuv>
+         <tuv xml:lang="NL">
+            <seg>Aids wordt gedefinieerd door de aanwezigheid van een of meer "opportunistische" ziekten (andere ziekten als gevolg van verminderde afweer).</seg>
+         </tuv>
+         <tuv xml:lang="NO">
+            <seg>AIDS kjennetegnes ved at pasienten får en eller flere “opportunistiske” sykdommer, dvs. andre sykdommer som oppstår fordi immunforsvaret er svekket.</seg>
+         </tuv>
+         <tuv xml:lang="NO">
+            <seg>AIDS kjennetegnes ved at pasienten får en eller flere “opportunistiske” sykdommer, dvs. andre sykdommer som oppstår fordi immunforsvaret er svekket.</seg>
+         </tuv>
+         <tuv xml:lang="PL">
+            <seg>AIDS jest zdefiniowany przez występowanie jednej lub więcej chorób „oportunistycznych” (innych chorób związanych ze spadkiem odporności).</seg>
+         </tuv>
+         <tuv xml:lang="PT">
+            <seg>A SIDA é definida pela presença de uma ou mais doenças “oportunistas” (outras doenças que surgem devido à diminuição da imunidade).</seg>
+         </tuv>
+         <tuv xml:lang="RO">
+            <seg>SIDA este caracterizată prin prezenţa uneia sau mai multor boli „oportuniste” (alte boli datorate imunităţii scăzute).</seg>
+         </tuv>
+         <tuv xml:lang="SK">
+            <seg>
+                AIDS sa vymedzuje prítomnosťou jednej alebo viacerých oportunistických chorôb (iné choroby z  dôvodu zníženej imunity).
+            </seg>
+         </tuv>
+         <tuv xml:lang="SV">
+            <seg>Aids definieras av närvaron av en eller flera "opportunistiska" sjukdomar (andra sjukdomar som beror på det försämrade immunförsvaret).</seg>
+         </tuv>
+      </tu>
+      <tu>
+         <tuv xml:lang="EN">
+            <seg>Effective combination therapies, introduced in the mid-1990s and widely used in industrialised countries, have had a profound effect on the course of HIV infection, improving the quality of life and delaying the onset of AIDS and death in HIV-infected individuals.</seg>
+         </tuv>
+         <tuv xml:lang="BG">
+            <seg>Ефективните комбинирани терапии, въведени в средата на 90-те години на ХХ в. и прилагани широко в индустриализираните страни, са оказали дълбок ефект върху хода на ХИВ инфекцията, подобрявайки качеството на живота и забавяйки началото на СПИН и настъпването на смърт при инфектирани с ХИВ лица.</seg>
+         </tuv>
+         <tuv xml:lang="CS">
+            <seg>Účinné kombinované terapie, zavedené v polovině 90. let 20. století a běžně používané v rozvinutých zemích, zásadně ovlivnily průběh HIV infekce tím, že zlepšily kvalitu života a oddálily nástup AIDS a úmrtí u osob nakažených HIV.</seg>
+         </tuv>
+         <tuv xml:lang="DA">
+            <seg>De effektive kombinationsbehandlinger, der blev indført i midten af 1990'erne og finder udbredt anvendelse i de industrialiserede lande, har haft stor betydning for hiv-infektionens forløb og har betydet bedre livskvalitet og senere udvikling af aids og dermed et længere liv for hiv-smittede personer.</seg>
+         </tuv>
+         <tuv xml:lang="DE">
+            <seg>Kombinationstherapien, die Mitte der 1990er Jahre eingeführt wurden und in den Industrieländern auf breiter Front eingesetzt werden, sind wirksam und beeinflussen den Verlauf einer HIV-Infektion grundlegend, verbessern die Lebensqualität und zögern den Ausbruch von AIDS sowie den Tod HIV-infizierter Personen heraus.</seg>
+         </tuv>
+         <tuv xml:lang="EL">
+            <seg>Οι αποτελεσματικοί συνδυασμοί θεραπείας που ξεκίνησαν να χορηγούνται στα μέσα της δεκαετίας του 1990 και χρησιμοποιούνται ευρέως σε βιομηχανοποιημένες χώρες είχαν καθοριστική επίδραση στην πορεία της λοίμωξης HIV, βελτιώνοντας την ποιότητα ζωής και επιβραδύνοντας την εμφάνιση του AIDS και την επέλευση του θανάτου σε άτομα με λοίμωξη HIV.</seg>
+         </tuv>
+         <tuv xml:lang="ES">
+            <seg>Los tratamientos combinados eficaces, introducidos a mediados de los años noventa y de uso generalizado en los países industrializados, han ejercido un efecto profundo sobre la evolución de la infección por el VIH, ya que mejoran la calidad de vida y retrasan la aparición del SIDA y la muerte en los infectados por este virus.</seg>
+         </tuv>
+         <tuv xml:lang="ET">
+            <seg>Tööstusriikides laialdaselt kasutatavad 1990. aastate keskel kasutusele võetud efektiivsed kombinatsioonravimid on põhjalikult muutnud HIV-nakkuse kulgu, parandades elukvaliteeti ning lükates edasi AIDSi teket ja HIV-nakatunute surma.</seg>
+         </tuv>
+         <tuv xml:lang="ET">
+            <seg>Tööstusriikides 1990. aastate keskel väljatöötatud ja laialdaselt kasutatavad efektiivsed kombinatsioonravimid on põhjalikult muutnud HIV-nakkuse kulgu, parandades elukvaliteeti ning lükates edasi AIDSi teket ja HIV-nakatunute surma.</seg>
+         </tuv>
+         <tuv xml:lang="FI">
+            <seg>Teollisuusmaissa 1990-luvun puolivälistä lähtien yleistyneet tehokkaat yhdistelmähoidot ovat vaikuttaneet voimakkaasti HIV-infektion leviämiseen. Ne parantavat HIV-infektion saaneiden henkilöiden elämänlaatua, hidastavat AIDSin puhkeamista ja pidentävät elinaikaa.</seg>
+         </tuv>
+         <tuv xml:lang="FR">
+            <seg>La mise au point, dès le milieu des années 1990, de multithérapies efficaces, dont l’utilisation s’est généralisée dans les pays industrialisés, a permis de réduire de façon significative l’évolution de l’infection à VIH, aboutissant à l’amélioration de la qualité de vie, à l’apparition plus tardive du SIDA et à la baisse de la mortalité précoce des personnes infectées par le VIH.</seg>
+         </tuv>
+         <tuv xml:lang="GA">
+            <seg>Bhí éifeacht ollmhór ag comhtheiripí, a tugadh isteach i lár na 1990idí agus a úsáideadh go forleathan i dtíortha tionsclaithe, ar chúrsa an ionfhabhtaithe VEID, ag feabhsú an chaighdeáin saoil agus ag cur moille ar SEIF a theacht i réim agus ar an mbás i measc daoine aonair a bhfuil ionfhabhtú VEID orthu.</seg>
+         </tuv>
+         <tuv xml:lang="HU">
+            <seg>A hatásos kombinációs terápiák 1990-es évek közepén történt bevezetése és széles körben történő alkalmazása a fejlett ipari országokban jelentős hatással volt a HIV-fertőzés lefolyására, a HIV-fertőzöttek életminőségének javítására, az AIDS megjelenésének késleltetésére és a HIV-fertőzésben elhunytak számának alakulására.</seg>
+         </tuv>
+         <tuv xml:lang="IS">
+            <seg>Áhrifarík, samsett meðferðarúrræði, sem komu fram um miðjan tíunda áratuginn og hafa verið mikið notuð í iðnríkjunum, draga gríðarmikið úr áhrifum HIV sýkinga, auka lífsgæði, seinka því að eyðnin nái yfirhöndinni og fækka dauðsföllum HIV sýktra.</seg>
+         </tuv>
+         <tuv xml:lang="IT">
+            <seg>Alcune efficaci terapie combinate, introdotte alla metà degli anni '90 e largamente in uso nei paesi industrializzati, hanno avuto un profondo effetto sul decorso dell'infezione da HIV, migliorando la qualità della vita e ritardando la comparsa dell'AIDS e la morte nei soggetti sieropositivi.</seg>
+         </tuv>
+         <tuv xml:lang="LT">
+            <seg>Veiksminga kombinuota terapija, įdiegta X dešimtmečio viduryje ir plačiai taikoma išsivysčiusiose šalyse, leido veiksmingai stabdyti ŽIV infekcijos plitimą pagerindama gyvenimo kokybę ir pailgindama laikotarpį, kol išsivysto AIDS, ir ŽIV infekuotų asmenų gyvenimo trukmę.</seg>
+         </tuv>
+         <tuv xml:lang="LV">
+            <seg>Efektīvas kombinācijas terapijas, kas tika ieviestas 20. gs. 90. gadu vidū un tiek plaši lietotas rūpnieciski attīstītās valstīs, ir atstājušas dziļu iespaidu uz HIV infekcijas attīstību, uzlabojot ar HIV inficēto cilvēku dzīves kvalitāti un paildzinot laiku līdz AIDS iestāšanās brīdim un nāvei.</seg>
+         </tuv>
+         <tuv xml:lang="MT">
+            <seg>
+                Kuri kkombinati effettivi, li kienu introdotti fin-nofs tal-1990 
+                u wżati ħafna fil-pajjiżi industrijalizzati
+                , għandhom effett profond fuq l-azzjoni tal-infezzjoni tal-HIV, itejjbu l-kwalità tal-ħajja u jipposponu l-bidu tal-AIDS u l-imwiet fl-individwi infettati bl-HIV.
+            </seg>
+         </tuv>
+         <tuv xml:lang="NL">
+            <seg>De effectieve combinatiebehandelingen die halverwege de jaren negentig zijn geïntroduceerd, worden in de geïndustrialiseerde landen op grote schaal toegepast. Ze hebben een enorm effect op het beloop van een hiv-infectie, verbeteren de kwaliteit van leven en vertragen de eerste verschijnselen van aids en het overlijden van met hiv geïnfecteerde personen.</seg>
+         </tuv>
+         <tuv xml:lang="NO">
+            <seg>Effektive kombinasjonsbehandlinger som ble introdusert på 1990-tallet og som er mye brukt i industrilandene, virker effektivt på HIV-infeksjonens forløp, forbedrer livskvaliteten og utsetter debuten av AIDS og død hos HIV-smittede personer.</seg>
+         </tuv>
+         <tuv xml:lang="PL">
+            <seg>
+                Skuteczne leczenie skojarzone, wprowadzone w połowie lat 90. i powszechnie stosowane w krajach uprzemysłowionych, miało znaczny wpływ na przebieg zakażenia HIV –  poprawiło jakość życia oraz opóźniło wystąpienie AIDS i zgonu u osób zakażonych wirusem HIV.
+            </seg>
+         </tuv>
+         <tuv xml:lang="PT">
+            <seg>As terapêuticas combinadas eficazes introduzidas a meio da década de 1990 e largamente utilizadas nos países industrializados tiveram um profundo efeito no curso da infecção por VIH, melhorando a qualidade de vida e retardando o aparecimento da SIDA e a morte nas pessoas infectadas com VIH.</seg>
+         </tuv>
+         <tuv xml:lang="RO">
+            <seg>Terapiile combinate eficace, introduse la mijlocul anilor ’90 şi larg utilizate în ţările industrializate, au avut un efect profund asupra evoluţiei infecţiei cu HIV, îmbunătăţind calitatea vieţii şi întârziind instalarea SIDA şi decesul la persoanele infectate cu HIV.</seg>
+         </tuv>
+         <tuv xml:lang="SK">
+            <seg>
+                Účinné liečebné kombinácie zavedené v  polovici 90. rokov 20.  storočia, ktoré sa vo veľkej miere využívajú v  priemyselných krajinách, majú významný vplyv na priebeh infekcie HIV zlepšením kvality života a  oddialením nástupu AIDS a  úmrtia osôb nakazených vírusom HIV.
+            </seg>
+         </tuv>
+         <tuv xml:lang="SL">
+            <seg>Učinkovite kombinirane terapije, ki so bile uvedene v sredini 90-ih let in se pogosto uporabljajo v industrializiranih državah, so močno vplivale na potek okužbe s HIV; izboljšale so kakovost življenja in odložile nastop aidsa in smrti pri osebah, okuženih s tem virusom.</seg>
+         </tuv>
+         <tuv xml:lang="SV">
+            <seg>Effektiva kombinationsbehandlingar, som introducerades i mitten av 1990-talet och har bred användning i industrialiserade länder, har haft en genomgripande effekt på HIV-infektionens förlopp, har förbättrat livskvaliteten samt fördröjt övergången till aids och dödsfall hos HIV-infekterade individer.</seg>
+         </tuv>
+      </tu>
+      <tu>
+         <tuv xml:lang="EN">
+            <seg>However, intolerance to side effects and appearance of resistant strains remain causes for concern.</seg>
+         </tuv>
+         <tuv xml:lang="BG">
+            <seg>Обаче непоносимостта към страничните ефекти и появата на резистентни щамове остават причини за загриженост.</seg>
+         </tuv>
+         <tuv xml:lang="CS">
+            <seg>Nesnášenlivost vedlejších účinků a vznik rezistentních kmenů však nadále zůstávají důvodem k obavám.</seg>
+         </tuv>
+         <tuv xml:lang="DA">
+            <seg>Bivirkninger og fremkomst af resistente stammer volder imidlertid fortsat problemer.</seg>
+         </tuv>
+         <tuv xml:lang="DE">
+            <seg>Allerdings geben schwer verträgliche Nebenwirkungen und das Auftreten resistenter Virenstämme Anlass zu Besorgnis.</seg>
+         </tuv>
+         <tuv xml:lang="EL">
+            <seg>Ωστόσο, η δυσανεξία των ανεπιθύμητων ενεργειών και η εμφάνιση ανθεκτικών στελεχών εξακολουθούν να αποτελούν παράγοντες ανησυχίας.</seg>
+         </tuv>
+         <tuv xml:lang="ES">
+            <seg>Sin embargo, la intolerancia a los efectos secundarios y la aparición de cepas resistentes siguen siendo motivos de preocupación.</seg>
+         </tuv>
+         <tuv xml:lang="ET">
+            <seg>Samas püsib probleemina kõrvalnähtude talumatus ja resistentsete tüvede tekkimine.</seg>
+         </tuv>
+         <tuv xml:lang="ET">
+            <seg>Sellele vaatamata püsib probleemina kõrvalnähtude talumatus ja resistentsete viirustüvede tekkimine.</seg>
+         </tuv>
+         <tuv xml:lang="FI">
+            <seg>Voimakkaat sivuvaikutukset sekä resistenttien kantojen ilmaantuminen ovat kuitenkin edelleen huolena.</seg>
+         </tuv>
+         <tuv xml:lang="FR">
+            <seg>Cependant, l’intolérance aux effets indésirables et l’apparition de souches résistantes restent deux sources d’inquiétude.</seg>
+         </tuv>
+         <tuv xml:lang="GA">
+            <seg>Mar sin féin, is cúis imní fós nach mbíonn daoine in ann ag fo-iarmhairtí an ghalair agus go bhfuil tréithchineálacha frithsheasmhacha ag teacht ar an bhfód.</seg>
+         </tuv>
+         <tuv xml:lang="HU">
+            <seg>A tolerálhatatlan mellékhatások és a rezisztens törzsek megjelenése azonban továbbra is aggodalomra ad okot.</seg>
+         </tuv>
+         <tuv xml:lang="IS">
+            <seg>Hins vegar hafa menn enn sem fyrr áhyggjur af hliðarverkunum og tilkoma ónæmra stofna</seg>
+         </tuv>
+         <tuv xml:lang="IS">
+            <seg>Hins vegar hafa menn enn sem fyrr áhyggjur af hliðarverkunum og tilkomu ónæmra stofna</seg>
+         </tuv>
+         <tuv xml:lang="IT">
+            <seg>Tuttavia, l'intolleranza agli effetti collaterali e la comparsa di ceppi resistenti restano motivo di preoccupazione.</seg>
+         </tuv>
+         <tuv xml:lang="LT">
+            <seg>Vis dėlto susirūpinimą tebekelia sunkūs šalutiniai reiškiniai ir atsparių padermių atsiradimas.</seg>
+         </tuv>
+         <tuv xml:lang="LV">
+            <seg>Tomēr saglabājas iemesls bažām, ko izraisa blakusparādību nepanesība un rezistentu celmu parādīšanās.</seg>
+         </tuv>
+         <tuv xml:lang="MT">
+            <seg>
+                Madankollu, l-intolleranza għall-effetti sekondarji u l-feġġa
+                 ta’  razez reżistenti jibqgħu kawżi ta’  tħassib
+                .
+            </seg>
+         </tuv>
+         <tuv xml:lang="NL">
+            <seg>Onverdraagbare bijwerkingen en het verschijnen van resistente stammen blijven echter bronnen van zorg.</seg>
+         </tuv>
+         <tuv xml:lang="NO">
+            <seg>Det knytter seg imidlertid fortsatt bekymring til intoleranse for bivirkninger og utviklingen av resistente virusstammer.</seg>
+         </tuv>
+         <tuv xml:lang="PL">
+            <seg>Nadal jednak istnieją obawy związane z nietolerancją działań niepożądanych oraz pojawianiem się szczepów opornych.</seg>
+         </tuv>
+         <tuv xml:lang="PT">
+            <seg>No entanto, a intolerância aos efeitos secundários e o aparecimento de estirpes resistentes continuam a ser motivo de preocupação.</seg>
+         </tuv>
+         <tuv xml:lang="RO">
+            <seg>Cu toate acestea, intoleranţa la reacţiile adverse şi apariţia unor tulpini rezistente rămân în continuare motive de îngrijorare.</seg>
+         </tuv>
+         <tuv xml:lang="SK">
+            <seg>
+                Dôvodom na obavy však zostáva neznášanlivosť vedľajších účinkov a  výskyt odolných kmeňov.
+            </seg>
+         </tuv>
+         <tuv xml:lang="SL">
+            <seg>Ne glede na to pa nesposobnost prenašanja neželenih učinkov in pojav odpornih sevov ostajata razlog za zaskrbljenost.</seg>
+         </tuv>
+         <tuv xml:lang="SV">
+            <seg>Intolerans mot biverkningarna och uppkomst av resistenta virusstammar ger dock fortfarande anledning till oro.</seg>
+         </tuv>
+      </tu>
+   </body>
+</tmx>

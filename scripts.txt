@@ -1,0 +1,5 @@
+
+
+docker run -e aws_access_key_id=<> -e aws_secret_access_key=<> -p 8501:8501 tpapp
+
+secrets:

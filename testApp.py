@@ -1,5 +1,6 @@
 
-from genericpath import exists
+from ast import Str
+from calendar import prmonth
 from math import exp
 from sqlalchemy import true
 import streamlit as st
@@ -7,11 +8,14 @@ import json
 import boto3
 import logging
 import pandas as pd
+from lxml import etree
+import clipboard
 from botocore.exceptions import ClientError
 
 from bedrock_apis import (
     invokeLLM,
     getPromptXml,
+    getPromptXml2,
 )
 
 from tmxFileProcess import (
@@ -24,18 +28,26 @@ from tmxFileProcess import (
 logger = logging.getLogger(__name__)
 
 #Language Choices
-LAN_CHOICES = {"EN": "English", "FR": "French", "ES": "Spanish", "DE": "German"}
+LAN_CHOICES = {"EN": "English", "FR": "French", "ES": "Spanish", "DE": "German", "MLM":"Malayalam", "TML":"Tamil"}
 
 #Translator Model Choices
 MODEL_CHOICES = {"anthropic.claude-3-sonnet-20240229-v1:0": "Claude 3 Sonnet", "anthropic.claude-3-haiku-20240307-v1:0": "Claude 3 Haiku", "mistral.mistral-large-2402-v1:0": "Mistral", "cohere.embed-multilingual-v3": "Cohere"}
 
+def on_copy_click(text):
+    # st.session_state.copied.append(text)
+    clipboard.copy(text)
 
-def getExamplesXml(): 
+def populateExamplesXml(examplesRootElement): 
+  if 'examples' in st.session_state :
     examples=st.session_state.examples
-    xml_out = "\n"
+    
     for example in examples:
-        xml_out += "<example><source>"+example[sl]+"</source><target>"+example[tl]+"</target></example>\n"
-    return xml_out
+        exampleElement = etree.SubElement(examplesRootElement, 'example')
+        source = etree.SubElement(exampleElement, 'source')
+        source.text = example[sl]
+        target = etree.SubElement(exampleElement, 'target')
+        target.text = example[tl]
+  
 
 def loadRules(sl,tl):
   print(sl, tl)
@@ -86,24 +98,44 @@ def getExampleText(text2translate, sl, tl):
 
 
 def dict_to_xml(examples):
-    xml_out = "\t\n"
+    xml_out = ''
     # Split each line on a colon and print the result
     for line in examples:
         if ":" in line:
             parts = line.split(":", 1)
-            xml_out += "<example><source>"+parts[0]+"</source><target>"+parts[1]+"</target></example>\n"
+            xml_out += '\n<example> <source>'+parts[0]+'</source> <target>'+parts[1]+'</target> </example>'
     return xml_out
 
 
 
-def getCustomExampleXml():
-  custom_example_xml=""
+
+def getCustomExampleXmlElement(examplesRootElement,examples):
+
+    for line in examples:
+        if ":" in line:
+            parts = line.split(":", 1)
+            example = etree.SubElement(examplesRootElement, 'example')
+            source = etree.SubElement(example, 'source')
+            source.text = parts[0].strip()
+            target = etree.SubElement(example, 'target')
+            target.text = parts[1].strip()
+
+    return examplesRootElement
+
+def populateCustomExampleXml(examplesRootElement):
   if custom_examples.strip() != ""  :
     # Split the string on newlines
     lines = custom_examples.split("\n")
-    custom_example_xml=dict_to_xml(lines)
-    print(custom_example_xml)
-  return custom_example_xml
+    getCustomExampleXmlElement(examplesRootElement,lines) 
+ 
+
+
+def generateExamplesXML():
+  examplesRootElement = etree.Element('examples')
+  populateCustomExampleXml(examplesRootElement)
+  populateExamplesXml(examplesRootElement)
+  return examplesRootElement
+
 
 
 st.title("Language Translator with LLMs")
@@ -193,11 +225,12 @@ with st.expander("Exmples for RAG",expanded=True):
  
 
 if st.button("Translate"):
-  example_xml=getExamplesXml()
-  custom_example_xml=getCustomExampleXml()
-  prompt = getPromptXml(sl,tl,text2translate,custom_example_xml,example_xml)
+  
+  examplesXml=generateExamplesXML()
+  #prompt = getPromptXml(sl,tl,text2translate,custom_example_xml,example_xml)
+  prompt = getPromptXml2(LAN_CHOICES[sl],LAN_CHOICES[tl],text2translate,examplesXml)
   with st.expander("LLM prompt"):
-     st.write(prompt)
+     st.text_area("Prompt",prompt)
   response=invokeLLM(prompt,model_id)
 
   
@@ -224,6 +257,7 @@ if st.button("Translate"):
   
   with st.expander("In "+LAN_CHOICES[tl] ,expanded=True) :
     st.write(translated2Text)
+    st.button("📋", on_click=on_copy_click, args=(translated2Text,))
 
   with st.expander("Metrics",expanded=True):
     st.write(f"- The input length is {input_tokens} tokens.")

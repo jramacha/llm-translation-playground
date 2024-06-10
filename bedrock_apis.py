@@ -1,11 +1,13 @@
 
 
 import json
+from queue import Empty
 import boto3
 import logging
 from botocore.exceptions import ClientError
 from click import prompt
 from lxml import etree
+from numpy import empty
 
 logger = logging.getLogger(__name__)
 
@@ -51,6 +53,28 @@ def getPromptXml(sl, tl, text2translate, custom_example_xml, example_xml):
     # Invoke Claude 3 with the text prompt
     return pretty_xml
 
+def getPromptXml2(sl, tl, text2translate, examples_xml):
+    prompt=getXMLPromptTemplate2(sl,tl,text2translate)
+    data = { 'sl':sl, 'tl':tl, 'text2translate':text2translate }
+    xml_prompt = prompt%data 
+    return appendExamples(xml_prompt,examples_xml)
+
+
+def appendExamples(xml_prompt,examples_xml):
+
+
+    if xml_prompt != '' :
+        parser = etree.XMLParser(remove_blank_text=True)
+        root = etree.fromstring(xml_prompt, parser=parser)
+        root.append(examples_xml)
+
+
+        # Add the new element to the root
+        xml_prompt=etree.tostring(root, pretty_print=True, encoding='utf-8').decode('utf-8')
+
+    print(xml_prompt)
+    return xml_prompt
+
 def getXMLPromptTemplate(sl,tl,text2translate,custom_example_xml,example_xml):
     prompt="""
     <prompt>
@@ -76,7 +100,6 @@ def getXMLPromptTemplate(sl,tl,text2translate,custom_example_xml,example_xml):
 
     <examples>
         %(custom_example_xml)s
-        %(example_xml)s
     </examples>
 
 
@@ -107,7 +130,65 @@ def getXMLPromptTemplate(sl,tl,text2translate,custom_example_xml,example_xml):
 
 
     <instructions>
-        Translate the text in the input_text tag from SOURCE_LANGUAGE to TARGET_LANGUAGE. refer the examples provided in the Examples tag section  and apply translation rules specified in the translation_rules tag section after translation. Output only the exact translation.
+        Translate the text in the input_text tag from SOURCE_LANGUAGE to TARGET_LANGUAGE. Use the examples provided in examples tag and apply matching examples to influence the translation output. Output only the exact translation.
+    </instructions>
+    </prompt>
+    """
+    
+    return prompt
+
+
+def getXMLPromptTemplate2(sl,tl,text2translate):
+    prompt="""
+    <prompt>
+    <system_instructions>
+        You are an expert language translator assistant. You will be given text in one language, and you need to translate it into another language. You should maintain the same tone, style, and meaning as the original text in your translation.
+    </system_instructions>
+
+
+    <source_language>
+        <language_name>%(sl)s</language_name>
+    </source_language>
+
+
+    <target_language>
+        <language_name>%(tl)s</language_name>
+    </target_language>
+
+
+    <input_text>
+        %(text2translate)s
+    </input_text>
+
+
+    <translation_rules>
+        <rule>
+        <description>Translate product names literally</description>
+        <data_map>
+            <item>
+            <source>language</source>
+            <target>bhasha</target>
+            </item>
+        </data_map>
+        </rule>
+        <rule>
+        <description>Translate company names literally</description>
+        <data_map>
+            <item>
+            <source>MIS</source>
+            <target>Ratings</target>
+            </item>
+            <item>
+            <source>Moodys Investment Services</source>
+            <target>Moodys Ratings</target>
+            </item>
+        </data_map>
+        </rule>
+    </translation_rules>
+
+
+    <instructions>
+        Translate the text in the input_text tag from SOURCE_LANGUAGE to TARGET_LANGUAGE. Use the examples provided in examples tag and apply matching examples to influence the translation output. Output only the exact translation.
     </instructions>
     </prompt>
     """

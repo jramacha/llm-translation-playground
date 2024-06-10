@@ -1,6 +1,7 @@
+from queue import Empty
 from bs4 import BeautifulSoup
 from langchain_core.documents import Document
-from langchain_community.vectorstores import FAISS
+#from langchain_community.vectorstores import FAISS
 import uuid
 
 
@@ -98,8 +99,12 @@ def getExamples(source_lang,target_lang,rule_language_lookup,matching_rules):
     # loop first 10 in rule_language_lookup
 
     for rule in matching_rules:
-        example = {source_lang: rule.page_content, target_lang: rule_language_lookup[rule.metadata["rule_id"]][target_lang]}
-        examples.append(example)
-        print(example)
+        matching_rule = rule_language_lookup[rule.metadata["rule_id"]]
+        if target_lang in matching_rule :
+            print(matching_rule[target_lang])
+            example = {source_lang: rule.page_content, target_lang: rule_language_lookup[rule.metadata["rule_id"]][target_lang]}
+            examples.append(example)
+            print(example)
     return examples
+
 
