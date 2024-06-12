@@ -28,7 +28,7 @@ from tmxFileProcess import (
 logger = logging.getLogger(__name__)
 
 #Language Choices
-LAN_CHOICES = {"EN": "English", "FR": "French", "ES": "Spanish", "DE": "German", "MLM":"Malayalam", "TML":"Tamil"}
+LAN_CHOICES = {"EN": "English", "FR": "French", "ES": "Spanish", "DE": "German", "MLM":"Malayalam", "TML":"Tamil", "JP":"Japanese"}
 
 #Translator Model Choices
 MODEL_CHOICES = {"anthropic.claude-3-sonnet-20240229-v1:0": "Claude 3 Sonnet", "anthropic.claude-3-haiku-20240307-v1:0": "Claude 3 Haiku", "mistral.mistral-large-2402-v1:0": "Mistral", "cohere.embed-multilingual-v3": "Cohere"}
