@@ -1,30 +1,29 @@
-LLM Transaltion Play Ground
+# Intelligent Mutual Fund Prospectus Document Processing 📈🤖
 
-The Playground will help you to explore language translation capabilities using a wide array LLMs (Large Language model) available in bedrock. You can explore mutiple language options and its translation accuracy for different use cases. This playground enables you to attach your translation memory files to LLM to infleunce transaltion and assess the results.
+Welcome to our LLM Languague transalator playground.
 
-The Steps to use
+Be sure to:
 
-1. You can choose the language pair for transaltion.
-2. Provide the text for translation.
-3. Choose the LLM models from bedrock.
-4. Upload your transaltion memory (TMX) File.
-5. Choose your embedding model.
-6. Process TMX file and store in Vector databse
-7. And evaluate Examples picked by simiraltiy search that can influce transaltion.
-8. Provide custom examples if required.
+* Change the title in this README
+* Edit your repository description on GitHub
 
-Steps to Build
+# Features 🌟
 
-1. Git Clone - <Link>
-2. Update the Bedrock Connection details - Region, API_KEYS
-3. 
+- **Translation Memory RAG Workflow**: A robust model that understands the intricacies of the Mutual Fund Prospectus.
+- **Pre-summarization**: Ensure detailed and context-aware responses every time.
+- **Seamless Integration**: Integrated with tools like Langchain, Streamlit, and Bedrock for a seamless experience.
 
+# Project Diagram 📊 
 
-Install
-conda update conda -c conda-canary
-conda config --set channel_priority flexible
-conda create --name financialqaenv -c conda-forge python=3.10.6
-conda activate financialqaenv
+![Project Diagram](assets/claude_3_vision_diagram.png)
 
-pip install --upgrade pip
-pip install --upgrade -r requirements.txt
+# Run Locally 💻
+
+## Security
+
+See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
+
+## License
+
+This library is licensed under the MIT-0 License. See the LICENSE file.
+

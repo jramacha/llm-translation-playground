@@ -15,13 +15,16 @@ client = boto3.client(
         service_name="bedrock-runtime", region_name="us-east-1"
     )
 
-def invokeLLM(llm_q,model_id):
+
+def invokeLLM(llm_q,model_id,maxTokes,temperature,top_p):
   data = {
-      "max_tokens": 1000,
+      "max_tokens": maxTokes,
       "messages": [
           {"role": "user", "content": llm_q}
       ],
-      "anthropic_version": "bedrock-2023-05-31"
+      "anthropic_version": "bedrock-2023-05-31",
+      "temperature": temperature
+      ,"top_p": top_p
       }
 
   try:
@@ -39,6 +42,51 @@ def invokeLLM(llm_q,model_id):
         err.response["Error"]["Message"],
     )
     raise
+  
+
+
+def converse (system_prompt,llm_q,model_id,maxTokens,temperature,top_p):
+
+    try:
+
+        data = [{
+           "role": "user", 
+           "content":[{"text": llm_q}],
+        }]
+    
+  
+        inference_config = {
+        "maxTokens": maxTokens,
+        "temperature": temperature
+        ,"topP": top_p
+        }
+
+        if(model_id=="amazon.titan-text-premier-v1:0" or model_id=="ai21.j2-ultra-v1"):
+            response = client.converse(
+            modelId=model_id,
+            messages=data,
+            inferenceConfig=inference_config )
+        else:
+            response = client.converse(
+            modelId=model_id,
+            messages=data,
+            system=[{"text":system_prompt}],
+            inferenceConfig=inference_config )
+
+
+
+        return response
+
+    except ClientError as err:
+        logger.error(
+            "Couldn't invoke %s. Here's why: %s: %s",
+            model_id,
+            err.response["Error"]["Code"],
+            err.response["Error"]["Message"],
+        )
+        raise
+   
+   
 
 
 def getPromptXml(sl, tl, text2translate, custom_example_xml, example_xml):
@@ -53,9 +101,9 @@ def getPromptXml(sl, tl, text2translate, custom_example_xml, example_xml):
     # Invoke Claude 3 with the text prompt
     return pretty_xml
 
-def getPromptXml2(sl, tl, text2translate, examples_xml):
-    prompt=getXMLPromptTemplate2(sl,tl,text2translate)
-    data = { 'sl':sl, 'tl':tl, 'text2translate':text2translate }
+def getPromptXml2(sl, tl, text2translate, examples_xml,userPrompt, systemPrompt):
+    prompt=getXMLPromptTemplate2(sl,tl,text2translate,userPrompt, systemPrompt)
+    data = { 'sl':sl, 'tl':tl, 'text2translate':text2translate,"userPrompt":userPrompt, "systemPrompt":systemPrompt }
     xml_prompt = prompt%data 
     return appendExamples(xml_prompt,examples_xml)
 
@@ -79,7 +127,7 @@ def getXMLPromptTemplate(sl,tl,text2translate,custom_example_xml,example_xml):
     prompt="""
     <prompt>
     <system_instructions>
-        You are an expert language translator assistant. You will be given text in one language, and you need to translate it into another language. You should maintain the same tone, style, and meaning as the original text in your translation.
+        You are an expert language translator assistant for financial enterprise based in US. You will be given text in one language, and you need to translate it into another language. You should maintain the same tone, style, and meaning as the original text in your translation.
     </system_instructions>
 
 
@@ -138,11 +186,11 @@ def getXMLPromptTemplate(sl,tl,text2translate,custom_example_xml,example_xml):
     return prompt
 
 
-def getXMLPromptTemplate2(sl,tl,text2translate):
+def getXMLPromptTemplate2(sl,tl,text2translate,userPrompt, systemPrompt):
     prompt="""
     <prompt>
     <system_instructions>
-        You are an expert language translator assistant. You will be given text in one language, and you need to translate it into another language. You should maintain the same tone, style, and meaning as the original text in your translation.
+        %(systemPrompt)s
     </system_instructions>
 
 
@@ -188,7 +236,7 @@ def getXMLPromptTemplate2(sl,tl,text2translate):
 
 
     <instructions>
-        Translate the text in the input_text tag from SOURCE_LANGUAGE to TARGET_LANGUAGE. Use the examples provided in examples tag and apply matching examples to influence the translation output. Output only the exact translation.
+        %(userPrompt)s
     </instructions>
     </prompt>
     """

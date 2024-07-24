@@ -1,20 +1,18 @@
 
-from ast import Str
-from calendar import prmonth
-from math import exp
-from sqlalchemy import true
+from cmd import PROMPT
+from curses import COLOR_WHITE
+import subprocess
+from sqlalchemy import null
 import streamlit as st
 import json
-import boto3
 import logging
 import pandas as pd
 from lxml import etree
 import clipboard
-from botocore.exceptions import ClientError
 
 from bedrock_apis import (
     invokeLLM,
-    getPromptXml,
+    converse,
     getPromptXml2,
 )
 
@@ -25,19 +23,31 @@ from tmxFileProcess import (
     populateRuleLanguageLookup,
 )
 
+
 logger = logging.getLogger(__name__)
 
 #Language Choices
 LAN_CHOICES = {"EN": "English", "FR": "French", "ES": "Spanish", "DE": "German", "MLM":"Malayalam", "TML":"Tamil", "JP":"Japanese"}
 
 #Translator Model Choices
-MODEL_CHOICES = {"anthropic.claude-3-sonnet-20240229-v1:0": "Claude 3 Sonnet", "anthropic.claude-3-haiku-20240307-v1:0": "Claude 3 Haiku", "mistral.mistral-large-2402-v1:0": "Mistral", "cohere.embed-multilingual-v3": "Cohere"}
+MODEL_CHOICES = {"anthropic.claude-3-sonnet-20240229-v1:0": "Claude 3 Sonnet", 
+                 "anthropic.claude-3-haiku-20240307-v1:0": "Claude 3 Haiku", 
+                 "amazon.titan-text-premier-v1:0":"Amazon Titan Text Premier",
+                 "mistral.mistral-large-2402-v1:0": "Mistral", 
+                 "ai21.j2-ultra-v1":"Jurassic-2 Ultra",
+                 "cohere.command-r-plus-v1:0":"Cohere	Command R+",
+                 "meta.llama3-70b-instruct-v1:0":"Meta	Llama 3 70b Instruct"
+                 }
 
 def on_copy_click(text):
     # st.session_state.copied.append(text)
     clipboard.copy(text)
 
-def populateExamplesXml(examplesRootElement): 
+
+
+
+
+def populateExamplesXml(examplesRootElement,sl,tl): 
   if 'examples' in st.session_state :
     examples=st.session_state.examples
     
@@ -49,7 +59,7 @@ def populateExamplesXml(examplesRootElement):
         target.text = example[tl]
   
 
-def loadRules(sl,tl):
+def loadRules(text2translate,sl,tl):
   print(sl, tl)
   tmx_db=st.session_state.tmx_db
   matching_rules = tmx_db.similarity_search(text2translate, filter={"lang": sl})
@@ -60,7 +70,7 @@ def loadRules(sl,tl):
   examples = getExamples(sl,tl,st.session_state.rule_language_lookup ,matching_rules)
   st.session_state.examples=examples
 
-def displayExamples():
+def displayExamples(sl,tl):
   examples=st.session_state.examples
   exampleText=""
   for example in examples:
@@ -69,8 +79,9 @@ def displayExamples():
   return exampleText
 
 def getExamplesDF(text2translate, sl, tl):
-  if st.session_state.sl!=sl or st.session_state.tl!=tl or st.session_state.text2translate!=text2translate:
-    loadRules(sl,tl)
+  if text2translate !=null:
+    if st.session_state.sl!=sl or st.session_state.tl!=tl or st.session_state.text2translate!=text2translate:
+      loadRules(text2translate,sl,tl)
   
   examples=st.session_state.examples
   columns = [LAN_CHOICES[sl],LAN_CHOICES[tl]]
@@ -122,7 +133,7 @@ def getCustomExampleXmlElement(examplesRootElement,examples):
 
     return examplesRootElement
 
-def populateCustomExampleXml(examplesRootElement):
+def populateCustomExampleXml(custom_examples,examplesRootElement):
   if custom_examples.strip() != ""  :
     # Split the string on newlines
     lines = custom_examples.split("\n")
@@ -130,10 +141,10 @@ def populateCustomExampleXml(examplesRootElement):
  
 
 
-def generateExamplesXML():
+def generateExamplesXML(custom_examples,sl,tl):
   examplesRootElement = etree.Element('examples')
-  populateCustomExampleXml(examplesRootElement)
-  populateExamplesXml(examplesRootElement)
+  populateCustomExampleXml(custom_examples,examplesRootElement)
+  populateExamplesXml(examplesRootElement,sl,tl)
   return examplesRootElement
 
 
@@ -159,15 +170,30 @@ with st.expander("Translation Choices",True):
       return MODEL_CHOICES[option]
   model_id=st.selectbox("Select LLM models from Amazon Bedrock",options=list(MODEL_CHOICES.keys()), format_func=format_func)
 
+  st.text("Tune Model Parameters")
+  tmcol1,tmcol2,tmcol3 = st.columns(3)
+  with  tmcol1:
+    max_seq_len = st.number_input('Max Tokens', value=2000)
+  with  tmcol2:
+    temperature = st.slider('Temperature', value=0.5, min_value=0.0, max_value=1.0)
+  with  tmcol3:
+     top_p = st.slider('top_p', value=0.95, min_value=0.0, max_value=1.0)
+
+with st.expander("LLM Prompts",False):
+  systemPrompt=st.text_area("System Prompt","You are an expert language translator assistant for financial entrprise based in US. You will be given text in one language, and you need to translate it into another language. You should maintain the same tone, style, and meaning as the original text in your translation.")
+  userPrompt =st.text_area("User Prompt","Translate the text in the input_text tag from SOURCE_LANGUAGE to TARGET_LANGUAGE. Use the examples provided in examples tag and apply matching examples to influence the translation output. Output only the exact translation.")
+
+
+
+
 with st.expander("Explore the model"):
   llm_q=st.text_area("What you want to know?")
   st.session_state.llm_q=llm_q
   if st.button(MODEL_CHOICES[model_id]+" at Your Service"):
-      response = invokeLLM(llm_q,model_id)
+      response = invokeLLM(llm_q,model_id,max_seq_len,temperature,top_p)
       result = json.loads(response.get("body").read())
       output_list = result.get("content", [])
       st.write(output_list[0]["text"])
-
 
 
 with st.expander("Translation memory influence options "):
@@ -186,8 +212,7 @@ with st.expander("Translation memory influence options "):
 
 
 
-  session_state = st.session_state
-  examples= []
+  
   egcol1, egcol2 = st.columns(2)
   with egcol2:  
     if st.button("Process TMX File"):
@@ -196,7 +221,7 @@ with st.expander("Translation memory influence options "):
       st.session_state.tmx_db = tmx_db
       rule_language_lookup=populateRuleLanguageLookup(documents)
       st.session_state.rule_language_lookup = rule_language_lookup
-      loadRules(sl,tl)
+      loadRules(text2translate,sl,tl)
         
   with egcol1:
       st.text("")
@@ -222,30 +247,32 @@ with st.expander("Exmples for RAG",expanded=True):
     if df is not None :
       st.markdown(df.to_html(escape=False), unsafe_allow_html=True)
       st.write(" ")
- 
+
 
 if st.button("Translate"):
   
-  examplesXml=generateExamplesXML()
-  #prompt = getPromptXml(sl,tl,text2translate,custom_example_xml,example_xml)
-  prompt = getPromptXml2(LAN_CHOICES[sl],LAN_CHOICES[tl],text2translate,examplesXml)
+  examplesXml=generateExamplesXML(custom_examples,sl,tl)
+  prompt = getPromptXml2(LAN_CHOICES[sl],LAN_CHOICES[tl],text2translate,examplesXml, userPrompt, systemPrompt)
   with st.expander("LLM prompt"):
-     st.text_area("Prompt",prompt)
-  response=invokeLLM(prompt,model_id)
+    st.text_area("Prompt",prompt)
+  #response=invokeLLM(prompt,model_id, max_seq_len, temperature,top_p)
+  response=converse(systemPrompt,prompt,model_id, max_seq_len, temperature,top_p)
+  
 
   
   # Process and print the response
-  result = json.loads(response.get("body").read())
-  input_tokens = result["usage"]["input_tokens"]
-  output_tokens = result["usage"]["output_tokens"]
-  output_list = result.get("content", [])
+  #result = json.loads(response.get("body").read())
+  input_tokens = response["usage"]["inputTokens"]
+  output_tokens = response["usage"]["outputTokens"]
+  latency=response["metrics"]["latencyMs"]
+  output_list = response["output"]["message"]["content"]
 
   print("Invocation details:")
   print(f"- The input length is {input_tokens} tokens.")
   print(f"- The output length is {output_tokens} tokens.")
 
   print(f"- The model returned {len(output_list)} response(s):")
-  for output in result.get("usage",[]):
+  for output in response.get("usage",[]):
       print(output)
 
   for output in output_list:
@@ -257,11 +284,10 @@ if st.button("Translate"):
   
   with st.expander("In "+LAN_CHOICES[tl] ,expanded=True) :
     st.write(translated2Text)
-    st.button("📋", on_click=on_copy_click, args=(translated2Text,))
+    st.button("📋", on_click=on_copy_click, args=(translated2Text))
 
   with st.expander("Metrics",expanded=True):
     st.write(f"- The input length is {input_tokens} tokens.")
     st.write(f"- The output length is {output_tokens} tokens.")
-
-
+    st.write(f"- Latency is {latency} Ms.")
 

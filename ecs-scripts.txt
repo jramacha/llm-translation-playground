@@ -1,0 +1,7 @@
+aws ecs create-service \
+  --cluster llm_tpg \
+  --service-name llm_tpg_svc \
+  --task-definition llm-tpg-taskdef \
+  --desired-count 1 \
+  --launch-type EC2 \
+  --network-configuration "awsvpcConfiguration={subnets=[subnet-d7b00088],securityGroups=[sg-e02ef8d1],assignPublicIp=ENABLED}"
