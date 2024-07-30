@@ -1,0 +1,48 @@
+
+<!DOCTYPE tmx
+  SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+   <header creationtool="Octank Translator's Workbench for Windows"
+           creationtoolversion="Edition 8 Build 863"
+           segtype="sentence"
+           o-tmf="TW4Win 2.0 Format"
+           datatype="text"
+           adminlang="EN"
+           srclang="EN">
+      <prop type="Name">subtitles</prop>
+   </header>
+   <body>
+      <tu>
+         <tuv xml:lang="EN">
+            <seg>heatwave</seg>
+         </tuv>
+         <tuv xml:lang="FR">
+            <seg>vague de chaleur</seg>
+         </tuv>
+      </tu>
+      <tu>
+            <tuv xml:lang="EN">
+               <seg>The easiest way</seg>
+            </tuv>
+            <tuv xml:lang="FR">
+               <seg>Le meilleur moyen</seg>
+            </tuv>
+      </tu>
+      <tu>
+            <tuv xml:lang="EN">
+               <seg>Hello, how are you?</seg>
+            </tuv>
+            <tuv xml:lang="FR">
+               <seg>Salut, comment ca va?</seg>
+            </tuv>
+      </tu>
+      <tu>
+            <tuv xml:lang="EN">
+               <seg>One has the right to</seg>
+            </tuv>
+            <tuv xml:lang="FR">
+               <seg>On est droit de</seg>
+            </tuv>
+      </tu>
+   </body>
+</tmx>
