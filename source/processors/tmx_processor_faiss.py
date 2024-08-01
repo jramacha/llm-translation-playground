@@ -9,14 +9,13 @@ import uuid
 def loadTMXFile(tmx_file):
     return BeautifulSoup(open(tmx_file), "lxml")
 
-def processTMXFile(tmx_file):
-    #ToDo - Should be deleted 
-    tmx_file = "assets/ECDC.tmx"
+def loadTMXFileContent(tmx_markups):
+    return BeautifulSoup(tmx_markups, "lxml")
 
-    tmx_soup=loadTMXFile(tmx_file)
+def processTMXFile(tmx_data, tmx_file):
+    tmx_soup=loadTMXFileContent(tmx_data)
     return loadDocuments(tmx_soup)
     
-
 
 def loadDocuments(tmx_soup):
     documents = []

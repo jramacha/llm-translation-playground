@@ -1,26 +1,93 @@
 import streamlit as st
 import json
-from bedrock_apis import (
+from utils.ui_utils import ( 
+    MODEL_CHOICES,
+    loadLanguageChoices,
+    getLanguageList,
+    getDefaultLanguageMask,
+)
+from utils.bedrock_apis import (
     invokeLLM,
 )
-
-MODEL_CHOICES = {
-   "anthropic.claude-3-sonnet-20240229-v1:0": "Claude 3 Sonnet", 
-   "anthropic.claude-3-haiku-20240307-v1:0": "Claude 3 Haiku", 
-   "amazon.titan-text-premier-v1:0":"Amazon Titan Text Premier",
-   "mistral.mistral-large-2402-v1:0": "Mistral", 
-   "ai21.j2-ultra-v1":"Jurassic-2 Ultra",
-   "cohere.command-r-plus-v1:0":"Cohere	Command R+",
-   "meta.llama3-70b-instruct-v1:0":"Meta	Llama 3 70b Instruct"
-}
+import pandas as pd
+import base64
+import streamlit as st
+import base64
 
 def format_func(option):
     return MODEL_CHOICES[option]
 
-st.title("LLM Translation Playground")
-st.write("Welcome to the LLM Translation Playground!")
+LOGO_IMAGE = "Arch_Amazon-Bedrock_64.png"
 
-with st.expander("Explore models", True):
+st.set_page_config(
+    page_title="LLM Translation Playground",
+    page_icon=":robot:",
+    layout="wide"
+)
+st.markdown(
+    """
+    <style>
+    .container {
+        display: flex;
+    }
+    .logo-text {
+        font-weight:300 !important;
+        font-size:50px !important;
+        color: #ffffff !important;
+        padding-top: 40px !important;
+        padding-left: 10px !important;
+    }
+    .logo-img {
+        float:right;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    f"""
+    <div class="container">
+        <img class="logo-img" width="100" height="100" src="data:image/png;base64,{base64.b64encode(open(LOGO_IMAGE, "rb").read()).decode()}">
+        <p class="logo-text">LLM Translation Playground</p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+url="https://aws.amazon.com/bedrock/"
+st.subheader("Welcome to the LLM Machine Translation Playground! Powered by [Amazon Bedrock](%s)"% url)
+with st.container(border=True):
+    st.write("Placeholder for high level app description")
+
+with st.expander("Supported Languages", True):
+  user_lang_mask = None
+  if "lang_mask" in  st.session_state:
+     user_lang_mask = st.session_state['lang_mask']
+
+  lang_list = loadLanguageChoices(lang_mask=user_lang_mask)
+  lang_list_labels = ["{}-{}".format(code, lang_list[code]) for code in lang_list.keys()]
+  
+  main_list = getLanguageList()
+  main_lang_list_labels = ["{}-{}".format(lang['LanguageCode'].upper(), lang['LanguageName']) for  lang in main_list]
+  #print(main_lang_list_labels)
+  #print(lang_list_labels)
+
+  popover = st.popover("Configure Languages")
+  selection = popover.multiselect("Languages", main_lang_list_labels, lang_list_labels)
+  if selection is not None:
+    new_lang_mask = [item.split("-")[0] for item in selection]
+    new_lang_list = loadLanguageChoices(lang_mask=new_lang_mask)
+    st.session_state['lang_mask'] = new_lang_mask
+    st.session_state['lang_list'] = new_lang_list
+  
+    st.markdown(" ")
+    lang_list_display = [[key, st.session_state['lang_list'][key]] for key in st.session_state['lang_list'].keys()]
+    df = pd.DataFrame(lang_list_display, columns=["Code", "Name"])
+    st.markdown(df.to_html(escape=False, index=False), unsafe_allow_html=True)
+    st.markdown(" ")
+
+with st.expander("Explore models"):
   model_id=st.selectbox("Select LLM models from Amazon Bedrock",options=list(MODEL_CHOICES.keys()), format_func=format_func)
 
   llm_q=st.text_area("Write your prompt")

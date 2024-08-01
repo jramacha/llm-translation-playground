@@ -13,7 +13,7 @@ import clipboard
 from botocore.exceptions import ClientError
 from sacrebleu.metrics import BLEU
 
-from bedrock_apis import (
+from utils.bedrock_apis import (
     invokeLLM,
     getPromptXml,
     converse,
@@ -27,27 +27,35 @@ from processors.tmx_processor_faiss import (
     populateRuleLanguageLookup,
 )
 
+from utils.ui_utils import (
+    MODEL_CHOICES,
+    loadLanguageChoices
+)
+
 logger = logging.getLogger(__name__)
 
 #Language Choices
-LAN_CHOICES = {"EN": "English", "FR": "French", "ES": "Spanish", "DE": "German", "MLM":"Malayalam", "TML":"Tamil", "JP":"Japanese"}
+#LAN_CHOICES = getLanguageChoices()
 
-#Translator Model Choices
-MODEL_CHOICES = {
-   "anthropic.claude-3-sonnet-20240229-v1:0": "Claude 3 Sonnet", 
-   "anthropic.claude-3-haiku-20240307-v1:0": "Claude 3 Haiku", 
-   "amazon.titan-text-premier-v1:0":"Amazon Titan Text Premier",
-   "mistral.mistral-large-2402-v1:0": "Mistral", 
-   "ai21.j2-ultra-v1":"Jurassic-2 Ultra",
-   "cohere.command-r-plus-v1:0":"Cohere	Command R+",
-   "meta.llama3-70b-instruct-v1:0":"Meta	Llama 3 70b Instruct"
-}
+if "lang_list" not in st.session_state:
+  st.session_state["lang_list"] = loadLanguageChoices()
+
 bleu = BLEU()
 
 def on_copy_click():
     if 'translated_text' in st.session_state:
       text = st.session_state['translated_text']
       clipboard.copy(text)
+
+def getLanguageChoices():
+  if "lang_list" not in st.session_state:
+     current_lang_mask = None
+     if "lang_mask" in st.session_state:
+        current_lang_mask = st.session_state["lang_mask"]
+        print("lang_mask", current_lang_mask)
+     st.session_state["lang_list"] = loadLanguageChoices(lang_mask=current_lang_mask)
+  print("lang_list", st.session_state["lang_list"])
+  return st.session_state["lang_list"]
 
 def populateExamplesXml(examplesRootElement, sl, tl): 
   if 'examples' in st.session_state :
@@ -84,7 +92,7 @@ def getExamplesDF(text2translate, sl, tl):
     loadRules(sl,tl)
   
   examples=st.session_state.examples
-  columns = [LAN_CHOICES[sl],LAN_CHOICES[tl]]
+  columns = [getLanguageChoices()[sl],getLanguageChoices()[tl]]
   rows=[None]*len(examples)
   data=[None]*len(examples)
   for index, example in enumerate(examples):
@@ -171,19 +179,17 @@ def evaluate():
 st.title("Language Translator with LLMs")
 text2translate=st.text_area("Source Text")
 
-col1, col2 = st.columns(2)
-
 #Language Choices
 with st.expander("Translation Choices",True):
   #st.header("Translation Choices")
   def format_func(option):
-      return LAN_CHOICES[option]
+      return getLanguageChoices()[option]
 
   lcol1, lcol2 = st.columns(2)
   with lcol1:
-    sl=st.selectbox("Select Source Language",options=list(LAN_CHOICES.keys()), format_func=format_func)
+    sl=st.selectbox("Select Source Language",options=list(getLanguageChoices().keys()), format_func=format_func)
   with lcol2:
-    tl=st.selectbox("Select Target Language",options=list(LAN_CHOICES.keys()), format_func=format_func)
+    tl=st.selectbox("Select Target Language",options=list(getLanguageChoices().keys()), format_func=format_func)
 
   def format_func(option):
       return MODEL_CHOICES[option]
@@ -220,7 +226,8 @@ with st.expander("Translation Customization"):
     session_state = st.session_state
     examples= []
     if st.button("Process TMX File"):
-      documents=processTMXFile(filename)
+      tmx_data = filename.getvalue()
+      documents=processTMXFile(tmx_data, filename)
       tmx_db = loadEmbeddings(documents)
       st.session_state.tmx_db = tmx_db
       rule_language_lookup=populateRuleLanguageLookup(documents)
@@ -230,14 +237,14 @@ with st.expander("Translation Customization"):
 with egcol2:
   #if st.button("Collect Matching Rules"):
   #    loadRules(sl,tl)
-  custom_examples=st.text_area("Provide samples manually: "+ LAN_CHOICES[sl] + " : " +LAN_CHOICES[tl] +"\n")
+  custom_examples=st.text_area("Provide samples manually: "+ getLanguageChoices()[sl] + " : " +getLanguageChoices()[tl] +"\n")
   st.write("One example pair per line seperated by colon (:). Example: Hello, how are you? : Hola, ¿cómo estás?")
 
 df=None
-if 'tmx_db' in st.session_state :
+if 'tmx_db' in st.session_state:
   df=getExamplesDF(text2translate, sl, tl)
 
-with st.expander("Exmples for RAG",expanded=True):
+with st.expander("Translation pairs loaded from knowledge base",expanded=True):
     #st.table(df)
     if df is not None :
       st.markdown(df.to_html(escape=False), unsafe_allow_html=True)
@@ -245,7 +252,7 @@ with st.expander("Exmples for RAG",expanded=True):
 
 if st.button("Translate"):
   examplesXml=generateExamplesXML(custom_examples,sl,tl)
-  prompt = getPromptXml2(LAN_CHOICES[sl],LAN_CHOICES[tl],text2translate,examplesXml, userPrompt, systemPrompt)
+  prompt = getPromptXml2(getLanguageChoices()[sl],getLanguageChoices()[tl],text2translate,examplesXml, userPrompt, systemPrompt)
   with st.expander("Generated Prompt"):
      st.text_area("Prompt",prompt)
   #response=invokeLLM(prompt,model_id)
@@ -281,7 +288,7 @@ with st.expander("Translation", expanded=True):
       st.write(st.session_state['translated_text'])
       st.button("📋", on_click=on_copy_click, args=())
   with egcol2:
-     st.write("Paste your reference " +LAN_CHOICES[tl] +" translation  below")
+     st.write("Paste your reference " +getLanguageChoices()[tl] +" translation  below")
      st.session_state['reference_text']=st.text_area('')
      st.button("Evaluate", on_click=evaluate, args=())
   
