@@ -11,10 +11,14 @@ from numpy import empty
 
 logger = logging.getLogger(__name__)
 
-client = boto3.client(
-        service_name="bedrock-runtime", region_name="us-east-1"
-    )
+client = boto3.client(service_name="bedrock-runtime", region_name="us-east-1")
 
+DEFAULT_SYSTEM_PROMPT="You are an expert language translation assistant.\
+    You will be given a text in one language, and you will translate it into a target language. You should maintain the same tone, style, and meaning as the original text in your translation."
+
+DEFAULT_USER_PROMPT="Translate the text in the input_text tag from SOURCE_LANGUAGE to TARGET_LANGUAGE. Source language and target language can be found respectively in the source_language and target_language tags.\
+    Use the examples provided in examples tag and apply respective examples to influence the translation output's tone and vocabulary.\
+    User the custom terms in the custom_terminology tags as strict translation guidelines."
 
 def invokeLLM(llm_q,model_id,maxTokes,temperature,top_p):
   data = {
@@ -88,105 +92,73 @@ def converse (system_prompt,llm_q,model_id,maxTokens,temperature,top_p):
    
    
 
-
-def getPromptXml(sl, tl, text2translate, custom_example_xml, example_xml):
-    prompt=getXMLPromptTemplate(sl,tl,text2translate,custom_example_xml,example_xml)
-    data = { 'sl':sl, 'tl':tl, 'text2translate':text2translate , 'custom_example_xml':custom_example_xml , 'example_xml':example_xml}
-    xml_prompt = prompt%data
-    # Initialize the Amazon Bedrock runtime client
-    
-    xml=etree.fromstring(xml_prompt)
-    pretty_xml=etree.tostring(xml, pretty_print=True).decode()
-    print(pretty_xml)
-    # Invoke Claude 3 with the text prompt
-    return pretty_xml
-
-def getPromptXml2(sl, tl, text2translate, examples_xml,userPrompt, systemPrompt):
-    prompt=getXMLPromptTemplate2(sl,tl,text2translate,userPrompt, systemPrompt)
-    data = { 'sl':sl, 'tl':tl, 'text2translate':text2translate,"userPrompt":userPrompt, "systemPrompt":systemPrompt }
+def getPromptXml2(sl, tl, text2translate, examples_xml,userPrompt, systemPrompt, customTerminology):
+    prompt=getXMLPromptTemplate2(sl,tl,text2translate,userPrompt, systemPrompt, customTerminology)
+    data = { 'sl':sl, 'tl':tl, 'text2translate':text2translate,"userPrompt":userPrompt, "systemPrompt":systemPrompt, "customTerminology":customTerminology}
     xml_prompt = prompt%data 
     return appendExamples(xml_prompt,examples_xml)
 
 
 def appendExamples(xml_prompt,examples_xml):
-
-
     if xml_prompt != '' :
         parser = etree.XMLParser(remove_blank_text=True)
         root = etree.fromstring(xml_prompt, parser=parser)
         root.append(examples_xml)
-
-
         # Add the new element to the root
         xml_prompt=etree.tostring(root, pretty_print=True, encoding='utf-8').decode('utf-8')
 
     print(xml_prompt)
     return xml_prompt
 
-def getXMLPromptTemplate(sl,tl,text2translate,custom_example_xml,example_xml):
-    prompt="""
-    <prompt>
-    <system_instructions>
-        You are an expert language translator assistant for financial enterprise based in US. You will be given text in one language, and you need to translate it into another language. You should maintain the same tone, style, and meaning as the original text in your translation.
-    </system_instructions>
+def populateCustomExampleXml(custom_examples, examplesRootElement):
+  if custom_examples.strip() != ""  :
+    # Split the string on newlines
+    lines = custom_examples.split("\n")
+    getCustomExampleXmlElement(examplesRootElement,lines) 
 
+def generateExamplesXML(custom_examples,sl,tl, session_state):
+  examplesRootElement = etree.Element('examples')
+  populateCustomExampleXml(custom_examples,examplesRootElement)
+  populateExamplesXml(examplesRootElement, sl, tl, session_state)
+  return examplesRootElement
 
-    <source_language>
-        <language_name>%(sl)s</language_name>
-    </source_language>
+def populateExamplesXml(examplesRootElement, sl, tl, session_state): 
+  if 'examples' in session_state :
+    examples=session_state.examples
+    for example in examples:
+        exampleElement = etree.SubElement(examplesRootElement, 'example')
+        source = etree.SubElement(exampleElement, 'source')
+        source.text = example[sl]
+        target = etree.SubElement(exampleElement, 'target')
+        target.text = example[tl]
 
+def getCustomExampleXmlElement(examplesRootElement,examples):
+    for line in examples:
+        if ":" in line:
+            parts = line.split(":", 1)
+            example = etree.SubElement(examplesRootElement, 'example')
+            source = etree.SubElement(example, 'source')
+            source.text = parts[0].strip()
+            target = etree.SubElement(example, 'target')
+            target.text = parts[1].strip()
+    return examplesRootElement
 
-    <target_language>
-        <language_name>%(tl)s</language_name>
-    </target_language>
+def generateCustomTerminologyXml(customTermValue):
+    if customTermValue is not None and customTermValue.strip() != "":
+        pairs = customTermValue.split("\n")
+        customTermRootElement = etree.Element('custom_terminology')
+        for line in pairs:
+            if ":" in line:
+                parts = line.split(":", 1)
+                example = etree.SubElement(customTermRootElement, 'custom_term')
+                source = etree.SubElement(example, 'source')
+                source.text = parts[0].strip()
+                target = etree.SubElement(example, 'target')
+                target.text = parts[1].strip()
+        return etree.tostring(customTermRootElement, pretty_print=True, encoding='utf-8').decode('utf-8')
+    return ""
 
-
-    <input_text>
-        %(text2translate)s
-    </input_text>
-
-
-    <examples>
-        %(custom_example_xml)s
-    </examples>
-
-
-    <translation_rules>
-        <rule>
-        <description>Translate product names literally</description>
-        <data_map>
-            <item>
-            <source>language</source>
-            <target>bhasha</target>
-            </item>
-        </data_map>
-        </rule>
-        <rule>
-        <description>Translate company names literally</description>
-        <data_map>
-            <item>
-            <source>MIS</source>
-            <target>Ratings</target>
-            </item>
-            <item>
-            <source>Moodys Investment Services</source>
-            <target>Moodys Ratings</target>
-            </item>
-        </data_map>
-        </rule>
-    </translation_rules>
-
-
-    <instructions>
-        Translate the text in the input_text tag from SOURCE_LANGUAGE to TARGET_LANGUAGE. Use the examples provided in examples tag and apply matching examples to influence the translation output. Output only the exact translation.
-    </instructions>
-    </prompt>
-    """
-    
-    return prompt
-
-
-def getXMLPromptTemplate2(sl,tl,text2translate,userPrompt, systemPrompt):
+def getXMLPromptTemplate2(sl, tl, text2translate, userPrompt, systemPrompt, customTerminology):
     prompt="""
     <prompt>
     <system_instructions>
@@ -208,37 +180,11 @@ def getXMLPromptTemplate2(sl,tl,text2translate,userPrompt, systemPrompt):
         %(text2translate)s
     </input_text>
 
-
-    <translation_rules>
-        <rule>
-        <description>Translate product names literally</description>
-        <data_map>
-            <item>
-            <source>language</source>
-            <target>bhasha</target>
-            </item>
-        </data_map>
-        </rule>
-        <rule>
-        <description>Translate company names literally</description>
-        <data_map>
-            <item>
-            <source>MIS</source>
-            <target>Ratings</target>
-            </item>
-            <item>
-            <source>Moodys Investment Services</source>
-            <target>Moodys Ratings</target>
-            </item>
-        </data_map>
-        </rule>
-    </translation_rules>
-
-
+    %(customTerminology)s
+    
     <instructions>
         %(userPrompt)s
     </instructions>
     </prompt>
     """
-    
     return prompt

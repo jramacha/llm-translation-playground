@@ -15,9 +15,12 @@ from sacrebleu.metrics import BLEU
 
 from utils.bedrock_apis import (
     invokeLLM,
-    getPromptXml,
     converse,
     getPromptXml2,
+    generateCustomTerminologyXml,
+    generateExamplesXML,
+    DEFAULT_SYSTEM_PROMPT,
+    DEFAULT_USER_PROMPT,
 )
 
 from processors.tmx_processor_oss import (
@@ -58,17 +61,6 @@ def getLanguageChoices():
      st.session_state["lang_list"] = loadLanguageChoices(lang_mask=current_lang_mask)
   print("lang_list", st.session_state["lang_list"])
   return st.session_state["lang_list"]
-
-def populateExamplesXml(examplesRootElement, sl, tl): 
-  if 'examples' in st.session_state :
-    examples=st.session_state.examples
-    for example in examples:
-        exampleElement = etree.SubElement(examplesRootElement, 'example')
-        source = etree.SubElement(exampleElement, 'source')
-        source.text = example[sl]
-        target = etree.SubElement(exampleElement, 'target')
-        target.text = example[tl]
-  
 
 def loadRules(sl,tl):
   print(sl, tl)
@@ -121,45 +113,18 @@ def dict_to_xml(examples):
             xml_out += '\n<example> <source>'+parts[0]+'</source> <target>'+parts[1]+'</target> </example>'
     return xml_out
 
-
-
-
-def getCustomExampleXmlElement(examplesRootElement,examples):
-    for line in examples:
-        if ":" in line:
-            parts = line.split(":", 1)
-            example = etree.SubElement(examplesRootElement, 'example')
-            source = etree.SubElement(example, 'source')
-            source.text = parts[0].strip()
-            target = etree.SubElement(example, 'target')
-            target.text = parts[1].strip()
-
-    return examplesRootElement
-
-def populateCustomExampleXml(custom_examples, examplesRootElement):
-  if custom_examples.strip() != ""  :
-    # Split the string on newlines
-    lines = custom_examples.split("\n")
-    getCustomExampleXmlElement(examplesRootElement,lines) 
-
-def generateExamplesXML(custom_examples,sl,tl):
-  examplesRootElement = etree.Element('examples')
-  populateCustomExampleXml(custom_examples,examplesRootElement)
-  populateExamplesXml(examplesRootElement,sl,tl)
-  return examplesRootElement
-
 def refresh_metrics():
    with st.sidebar:
     st.subheader("Metrics")
     if 'latency' in st.session_state:
-      latency=st.session_state['latency']  
-      st.metric(label="Latency", value=latency)
+      latency=st.session_state['latency']
+      st.metric(label="Latency(ms)", value=f'{latency:,}')
     if 'input_tokens' in st.session_state:
-      input_tokens=st.session_state['input_tokens']  
-      st.metric(label="Input Tokens", value=input_tokens)
+      input_tokens=st.session_state['input_tokens']
+      st.metric(label="Input Tokens", value=f'{input_tokens:,}')
     if 'output_tokens' in st.session_state:
-      output_tokens=st.session_state['output_tokens']  
-      st.metric(label="Input Tokens", value=output_tokens)
+      output_tokens=st.session_state['output_tokens']
+      st.metric(label="Input Tokens", value=f'{output_tokens:,}')
     if 'bleu' in st.session_state:
       bleu = st.session_state['bleu']
       if 'delta' in st.session_state['bleu']: st.metric(label="Translation score", value=str(round(bleu['score'], 2)), delta=str(round(bleu['delta'], 2)))
@@ -180,7 +145,37 @@ def evaluate():
     else:
        st.session_state['bleu'] = {}
     st.session_state['bleu']['score']=result.score
-    refresh_metrics()
+
+def translate():
+  examplesXml=generateExamplesXML(st.session_state['custom_examples'],sl,tl, st.session_state)
+  customTermsXml=generateCustomTerminologyXml(st.session_state['custom_terms'])
+  prompt = getPromptXml2(getLanguageChoices()[sl],getLanguageChoices()[tl],text2translate,examplesXml, userPrompt, systemPrompt, customTermsXml)
+  st.session_state['prompt'] = prompt
+  #response=invokeLLM(prompt,model_id)
+  response=converse(systemPrompt,prompt,model_id, max_seq_len, temperature,top_p)
+
+  # Process and print the response
+  #result = json.loads(response.get("body").read())
+  st.session_state['input_tokens'] = response["usage"]["inputTokens"]
+  st.session_state['output_tokens'] = response["usage"]["outputTokens"]
+  st.session_state['latency']=response["metrics"]["latencyMs"]
+  output_list = response["output"]["message"]["content"]
+
+  print(f"- The model returned {len(output_list)} response(s):")
+  for output in response.get("usage",[]):
+      print(output)
+
+  for output in output_list:
+      print(output["text"])
+
+  translated2Text = {
+              output_list[0]["text"]
+          }
+  st.session_state['translated_text'] = output_list[0]["text"]
+  
+  if 'bleu' in st.session_state:
+    st.session_state.pop("bleu")
+  evaluate()
 
 st.title("Language Translator with LLMs")
 text2translate=st.text_area("Source Text")
@@ -188,7 +183,7 @@ text2translate=st.text_area("Source Text")
 col1, col2 = st.columns(2)
 
 #Language Choices
-with st.expander("Translation Choices",True):
+with st.expander("Translation Configuration",True):
   #st.header("Translation Choices")
   def format_func(option):
       return getLanguageChoices()[option]
@@ -211,12 +206,13 @@ with st.expander("Translation Choices",True):
     temperature = st.slider('Temperature', value=0.5, min_value=0.0, max_value=1.0)
   with  tmcol3:
      top_p = st.slider('top_p', value=0.95, min_value=0.0, max_value=1.0)
+  translate_button=st.button("Translate", on_click=translate,args=())
 
 with st.expander("Prompt Configuration",False):
-  systemPrompt=st.text_area("System Prompt","You are an expert language translator assistant for financial entrprise based in US. You will be given text in one language, and you need to translate it into another language. You should maintain the same tone, style, and meaning as the original text in your translation.")
-  userPrompt =st.text_area("User Prompt","Translate the text in the input_text tag from SOURCE_LANGUAGE to TARGET_LANGUAGE. Use the examples provided in examples tag and apply matching examples to influence the translation output. Output only the exact translation.")
+  systemPrompt=st.text_area("System Prompt", DEFAULT_SYSTEM_PROMPT)
+  userPrompt =st.text_area("User Prompt", DEFAULT_USER_PROMPT)
 
-with st.expander("Translation customization"):
+with st.expander("Translation Customization"):
   egcol1, egcol2 = st.columns(2)
   with egcol1:
     list = ['No Index Selected']
@@ -241,10 +237,11 @@ with st.expander("Translation customization"):
       loadRules(sl,tl)
 
   with egcol2:
-    #if st.button("Collect Matching Rules"):
-    #    loadRules(sl,tl)
-    custom_examples=st.text_area("Custom Examples: "+ getLanguageChoices()[sl] + " : " +getLanguageChoices()[tl] +"\n")
-    st.write("One example pair per line seperated by colon (:). Example: Hello, how are you? : Hola, ¿cómo estás?")
+    custom_examples=st.text_area("Provide translation memory manually: "+ getLanguageChoices()[sl] + " : " +getLanguageChoices()[tl] +"\n")
+    custom_terms=st.text_area("Provide custom terminology manually: "+ getLanguageChoices()[sl] + " : " +getLanguageChoices()[tl] +"\n")
+    st.session_state['custom_examples']=custom_examples
+    st.session_state['custom_terms']=custom_terms
+    st.write("One language sample pair per line seperated by colon (:). Example: Hello, how are you? : Hola, ¿cómo estás?")
 
 df=None
 if 'tmx_loaded' in st.session_state  and st.session_state.tmx_loaded == True:
@@ -256,44 +253,23 @@ with st.expander("Translation pairs loaded from knowledge base",expanded=True):
       st.markdown(df.to_html(escape=False), unsafe_allow_html=True)
       st.write(" ")
 
-if st.button("Translate"):
-  examplesXml=generateExamplesXML(custom_examples,sl,tl)
-  prompt = getPromptXml2(getLanguageChoices()[sl],getLanguageChoices()[tl],text2translate,examplesXml, userPrompt, systemPrompt)
-  with st.expander("Generated Prompt"):
-     st.text_area("Prompt",prompt)
-  response=converse(systemPrompt,prompt,model_id, max_seq_len, temperature,top_p)
+with st.expander("Generated Prompt"):
+     if 'prompt' in st.session_state:
+      st.text_area("Prompt",st.session_state['prompt'])
 
-  
-  # Process and print the response
-  #result = json.loads(response.get("body").read())
-  st.session_state['input_tokens'] = response["usage"]["inputTokens"]
-  st.session_state['output_tokens'] = response["usage"]["outputTokens"]
-  st.session_state['latency']=response["metrics"]["latencyMs"]
-  output_list = response["output"]["message"]["content"]
+if 'translated_text' in st.session_state:
+  with st.expander("Translation", expanded=True):
+    egcol1, egcol2 = st.columns(2)
+    with egcol1:
+      if 'translated_text' in st.session_state:
+        st.write(st.session_state['translated_text'])
+        bcol1, bcol2 = st.columns(2)
+        with bcol1:
+          st.button("✅ Evaluate", on_click=evaluate, args=())
+        with bcol2:
+          st.button("📋 Copy", on_click=on_copy_click, args=())
+    with egcol2:
+      st.write("Paste your reference " +getLanguageChoices()[tl] +" translation  below")
+      st.session_state['reference_text']=st.text_area('')
 
-  print(f"- The model returned {len(output_list)} response(s):")
-  for output in response.get("usage",[]):
-      print(output)
-
-  for output in output_list:
-      print(output["text"])
-
-  translated2Text = {
-              output_list[0]["text"]
-          }
-  st.session_state['translated_text'] = output_list[0]["text"]
-  if 'bleu' in st.session_state:
-    st.session_state.pop("bleu")
-  refresh_metrics()
-
-with st.expander("Translation", expanded=True):
-  egcol1, egcol2 = st.columns(2)
-  with egcol1:
-    if 'translated_text' in st.session_state:
-      st.write(st.session_state['translated_text'])
-      st.button("📋", on_click=on_copy_click, args=())
-  with egcol2:
-     st.write("Paste your reference " +getLanguageChoices()[tl] +" translation  below")
-     st.session_state['reference_text']=st.text_area('')
-     st.button("Evaluate", on_click=evaluate, args=())
-  
+refresh_metrics()
