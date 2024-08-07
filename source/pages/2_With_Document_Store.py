@@ -124,7 +124,7 @@ def refresh_metrics():
       st.metric(label="Input Tokens", value=f'{input_tokens:,}')
     if 'output_tokens' in st.session_state:
       output_tokens=st.session_state['output_tokens']
-      st.metric(label="Input Tokens", value=f'{output_tokens:,}')
+      st.metric(label="Output Tokens", value=f'{output_tokens:,}')
     if 'bleu' in st.session_state:
       bleu = st.session_state['bleu']
       if 'delta' in st.session_state['bleu']: st.metric(label="Translation score", value=str(round(bleu['score'], 2)), delta=str(round(bleu['delta'], 2)))
