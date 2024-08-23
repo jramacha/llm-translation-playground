@@ -57,13 +57,10 @@ def getLanguageChoices():
      current_lang_mask = None
      if "lang_mask" in st.session_state:
         current_lang_mask = st.session_state["lang_mask"]
-        print("lang_mask", current_lang_mask)
-     st.session_state["lang_list"] = loadLanguageChoices(lang_mask=current_lang_mask)
-  print("lang_list", st.session_state["lang_list"])
+        st.session_state["lang_list"] = loadLanguageChoices(lang_mask=current_lang_mask)
   return st.session_state["lang_list"]
 
 def loadRules(sl,tl):
-  print(sl, tl)
   st.session_state.text2translate=text2translate
   st.session_state.sl=sl
   st.session_state.tl=tl
@@ -132,7 +129,6 @@ def refresh_metrics():
 
 def evaluate():
   print("Running Evaluation")
-  #st.session_state['translated_text']
   if 'translated_text' in st.session_state and 'reference_text' in st.session_state:
     sys = st.session_state['translated_text'].split(".")
     refs = [st.session_state['reference_text'].split(".")]
@@ -161,13 +157,7 @@ def translate():
   st.session_state['latency']=response["metrics"]["latencyMs"]
   output_list = response["output"]["message"]["content"]
 
-  print(f"- The model returned {len(output_list)} response(s):")
-  for output in response.get("usage",[]):
-      print(output)
-
-  for output in output_list:
-      print(output["text"])
-
+  print(f"The model returned {len(output_list)} response(s):")
   translated2Text = {
               output_list[0]["text"]
           }
@@ -230,7 +220,6 @@ with st.expander("Translation Customization"):
             index_name=processTMXFile(tmx_data, file_name)
     if index_name is not None and index_name != "No Index Selected":
       documents=queryIndex(index_name)
-      print(documents)
       rule_language_lookup=populateRuleLanguageLookup(documents)
       st.session_state.rule_language_lookup = rule_language_lookup
       st.session_state.tmx_loaded = True
@@ -270,6 +259,6 @@ if 'translated_text' in st.session_state:
           st.button("📋 Copy", on_click=on_copy_click, args=())
     with egcol2:
       st.write("Paste your reference " +getLanguageChoices()[tl] +" translation  below")
-      st.session_state['reference_text']=st.text_area('')
+      st.text_area("", key="reference_text")
 
 refresh_metrics()

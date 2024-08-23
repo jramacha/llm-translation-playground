@@ -50,7 +50,6 @@ def loadLanguageChoices(lang_mask_filename='utils/language-mask-config.json', la
     #    for item in LANG_CHOICES
     #    if item["LanguageCode"].upper() in lang_mask
     #]
-    print("lang_mask", lang_mask)
     filtered_langs = {item["LanguageCode"].upper(): item["LanguageName"] for item in lang_choices if item["LanguageCode"].upper() in lang_mask}
     return filtered_langs
 

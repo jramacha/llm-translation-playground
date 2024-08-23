@@ -44,5 +44,13 @@
                <seg>On est droit de</seg>
             </tuv>
       </tu>
+      <tu>
+            <tuv xml:lang="EN">
+               <seg>That's why I brought you wood</seg>
+            </tuv>
+            <tuv xml:lang="FR">
+               <seg>C'est pour cette raison que je vous ai apporté du bois</seg>
+            </tuv>
+      </tu>
    </body>
 </tmx>

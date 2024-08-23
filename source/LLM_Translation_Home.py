@@ -58,7 +58,8 @@ st.markdown(
 url="https://aws.amazon.com/bedrock/"
 st.subheader("Welcome to the LLM Machine Translation Playground! Powered by [Amazon Bedrock](%s)"% url)
 with st.container(border=True):
-    st.write("Placeholder for high level app description")
+    st.write("The LLM Transalation Playground is an experimentation tool for business personas and developers looking to assess the viability of using Foundation Models available in [Amazon Bedrock](https://aws.amazon.com/bedrock/) for their machine translation use cases.\
+            LLM Transalation Playground can help you decide which machine translation technology (Neural MT or LLM-based MT) is better suited for your machine translation workload.")
 
 with st.expander("Supported Languages", True):
   user_lang_mask = None

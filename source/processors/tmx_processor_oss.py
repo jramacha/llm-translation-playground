@@ -115,14 +115,12 @@ def populateRuleLanguageLookup(documents):
     from collections import defaultdict
     rule_language_lookup = defaultdict(dict)
     for doc in documents:
-        print(doc)
         rule_language_lookup[doc["rule_id"]].update({doc["lang"]: doc["text"]})
     return rule_language_lookup
 
 
 def loadExamples(source_lang,target_lang,rule_language_lookup):
     examples = []
-    print(len(rule_language_lookup))
     rule_list = list(rule_language_lookup.values())
     for rule in rule_list:
         if target_lang in rule and source_lang in rule:
@@ -140,18 +138,3 @@ def queryIndex(index_name: str):
         documents.append(document)
     return documents
 
-if __name__ == "__main__":
-   # Sample ussage of processTMXFile
-   #index_name = processTMXFile("/Users/nzzekpa/Documents/dev/llm-translation-playground/assets/subtitles_memory.tmx", read_file=True)
-   #indices = listIndices()
-   #print(indices)
-
-   #client.indices.delete("subtitles_memory")
-   #client.indices.delete("subtitles")
-   #lient.indices.delete("test")
-
-   docs = queryIndex("subtitles_memory")
-   lookup_dict = populateRuleLanguageLookup(docs)
-   print(lookup_dict)
-   examples = loadExamples('EN', 'FR', lookup_dict)
-   print(examples)

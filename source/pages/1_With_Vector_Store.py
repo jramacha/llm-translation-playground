@@ -55,13 +55,10 @@ def getLanguageChoices():
      current_lang_mask = None
      if "lang_mask" in st.session_state:
         current_lang_mask = st.session_state["lang_mask"]
-        print("lang_mask", current_lang_mask)
-     st.session_state["lang_list"] = loadLanguageChoices(lang_mask=current_lang_mask)
-  print("lang_list", st.session_state["lang_list"])
+        st.session_state["lang_list"] = loadLanguageChoices(lang_mask=current_lang_mask)
   return st.session_state["lang_list"]
 
 def loadRules(sl,tl):
-  print(sl, tl)
   tmx_db=st.session_state.tmx_db
   matching_rules = tmx_db.similarity_search(text2translate, filter={"lang": sl})
   st.session_state.text2translate=text2translate
@@ -159,13 +156,7 @@ def translate():
   st.session_state['latency']=response["metrics"]["latencyMs"]
   output_list = response["output"]["message"]["content"]
 
-  print(f"- The model returned {len(output_list)} response(s):")
-  for output in response.get("usage",[]):
-      print(output)
-
-  for output in output_list:
-      print(output["text"])
-
+  print(f"The model returned {len(output_list)} response(s):")
   translated2Text = {
               output_list[0]["text"]
           }
@@ -176,7 +167,8 @@ def translate():
   evaluate()
 
 st.title("Language Translator with LLMs")
-text2translate=st.text_area("Source Text")
+with st.expander("Source Text",True):
+  text2translate=st.text_area("Type the text to translated below")
 
 #Language Choices
 with st.expander("Translation Configuration",True):
@@ -267,7 +259,7 @@ if 'translated_text' in st.session_state:
         st.button("📋 Copy", on_click=on_copy_click, args=())
     with egcol2:
       st.write("Paste your reference " +getLanguageChoices()[tl] +" translation  below")
-      st.session_state['reference_text']=st.text_area('')
+      st.text_area("", key="reference_text")
 
 refresh_metrics()
      

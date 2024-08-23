@@ -93,17 +93,15 @@ def populateRuleLanguageLookup(documents) :
 
 def getExamples(source_lang,target_lang,rule_language_lookup,matching_rules):
     examples = []
-    print(len(matching_rules))
-    print(len(rule_language_lookup))
     # loop first 10 in rule_language_lookup
 
     for rule in matching_rules:
         matching_rule = rule_language_lookup[rule.metadata["rule_id"]]
         if target_lang in matching_rule :
-            print(matching_rule[target_lang])
+            #print(matching_rule[target_lang])
             example = {source_lang: rule.page_content, target_lang: rule_language_lookup[rule.metadata["rule_id"]][target_lang]}
             examples.append(example)
-            print(example)
+            #print(example)
     return examples
 
 

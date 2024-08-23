@@ -18,7 +18,8 @@ DEFAULT_SYSTEM_PROMPT="You are an expert language translation assistant.\
 
 DEFAULT_USER_PROMPT="Translate the text in the input_text tag from SOURCE_LANGUAGE to TARGET_LANGUAGE. Source language and target language can be found respectively in the source_language and target_language tags.\
     Use the examples provided in examples tag and apply respective examples to influence the translation output's tone and vocabulary.\
-    User the custom terms in the custom_terminology tags as strict translation guidelines."
+    User the custom terms in the custom_terminology tags as strict translation guidelines.\
+    Only return the translated text."
 
 def invokeLLM(llm_q,model_id,maxTokes,temperature,top_p):
   data = {
@@ -107,7 +108,6 @@ def appendExamples(xml_prompt,examples_xml):
         # Add the new element to the root
         xml_prompt=etree.tostring(root, pretty_print=True, encoding='utf-8').decode('utf-8')
 
-    print(xml_prompt)
     return xml_prompt
 
 def populateCustomExampleXml(custom_examples, examplesRootElement):
@@ -122,7 +122,7 @@ def generateExamplesXML(custom_examples,sl,tl, session_state):
   populateExamplesXml(examplesRootElement, sl, tl, session_state)
   return examplesRootElement
 
-def populateExamplesXml(examplesRootElement, sl, tl, session_state): 
+def populateExamplesXml(examplesRootElement, sl, tl, session_state):
   if 'examples' in session_state :
     examples=session_state.examples
     for example in examples:
