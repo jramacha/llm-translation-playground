@@ -205,22 +205,21 @@ with st.expander("Translation Customization"):
   with egcol1:
   #TMX Examples Files
     filename = st.file_uploader("Upload a TMX file", type=["tmx"])
-    st.write('You selected `%s`' % filename)
 
     #Embedding Model Choices
-    EMBED_CHOICES = {"amazon.titan-embed-text-v2:0": "Titan Embedding Text v2", "cohere.embed-multilingual-v3": "Cohere Multilingual", "cohere.embed-english-v3": "Cohere English"}
+    EMBED_CHOICES = {"amazon.titan-embed-text-v2:0": "Titan Embedding Text v2", "cohere.embed-multilingual-v3": "Cohere Multilingual"}
 
     def format_func(option):
         return EMBED_CHOICES[option]
 
-    embedding_id=st.selectbox("Select embedding models from Amazon Bedrock",options=list(EMBED_CHOICES.keys()), format_func=format_func)
+    embedding_modelId=st.selectbox("Select embedding models from Amazon Bedrock",options=list(EMBED_CHOICES.keys()), format_func=format_func)
 
     session_state = st.session_state
     examples= []
     if st.button("Process TMX File"):
       tmx_data = filename.getvalue()
       documents=processTMXFile(tmx_data, filename)
-      tmx_db = loadEmbeddings(documents)
+      tmx_db = loadEmbeddings(documents,embedding_modelId)
       st.session_state.tmx_db = tmx_db
       rule_language_lookup=populateRuleLanguageLookup(documents)
       st.session_state.rule_language_lookup = rule_language_lookup

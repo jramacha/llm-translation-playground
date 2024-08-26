@@ -36,7 +36,7 @@ def loadDocuments(tmx_soup):
     return documents
 
 
-def loadEmbeddings(documents):
+def loadEmbeddings(documents,embedding_modelId):
     import pickle
     from io import BytesIO
     from pathlib import Path
@@ -46,25 +46,32 @@ def loadEmbeddings(documents):
 
     boto3_session=boto3.session.Session()
     bedrock_runtime = boto3_session.client("bedrock-runtime")
-    embedding_modelId = "cohere.embed-multilingual-v3"
+    #embedding_modelId = "cohere.embed-multilingual-v3"
 
     # will be used to embed user queries
     query_embed_model = BedrockEmbeddings(
         model_id=embedding_modelId,
-        model_kwargs={"input_type": "search_query"},
+        #model_kwargs={"input_type": "search_query"},
         client=bedrock_runtime,
     )
+
 
 
     # will be used to embed documents
     doc_embed_model = BedrockEmbeddings(
         model_id=embedding_modelId,
-        model_kwargs={"input_type": "search_document", "truncate": "END"},
+        #model_kwargs={"input_type": "search_document", "truncate": "END"},
         client=bedrock_runtime,
     )
 
-    vector_store_file = "tmx_vec_db.pkl"
-    CREATE_NEW = False # create new vector store if True or load existing one if False
+    if(embedding_modelId=="cohere.embed-multilingual-v3"):
+        query_embed_model.model_kwargs={"input_type": "search_query"}
+        doc_embed_model.model_kwargs={"input_type": "search_document", "truncate": "END"}
+
+
+
+    vector_store_file = "tmx_vec_db_"+embedding_modelId+".pkl"
+    CREATE_NEW = True # create new vector store if True or load existing one if False
     DOCS_TO_INDEX = 3000 # number of documents to index, this code does about 700 docs per minute and the are over 64K docs in the tmx file
 
     if CREATE_NEW:
@@ -77,7 +84,6 @@ def loadEmbeddings(documents):
         
         vector_db_buff = BytesIO(pickle.load(open(vector_store_file, "rb")))
         tmx_db = FAISS.deserialize_from_bytes(serialized=vector_db_buff.read(), embeddings=query_embed_model)
-
     return tmx_db
 
 
