@@ -17,7 +17,7 @@ region = os.getenv("REGION", default="us-east-1")
 service = 'aoss'
 credentials = boto3.Session().get_credentials()
 auth = AWSV4SignerAuth(credentials, region, service)
-ingestion_limit = int(os.getenv("INGESTION_LIMIT", default=10))
+ingestion_limit = int(os.getenv("OSS_INGESTION_LIMIT", default=20))
 
 client = OpenSearch(
         hosts=[{"host": host, "port": port}],
@@ -129,7 +129,6 @@ def loadExamples(source_lang,target_lang,rule_language_lookup):
     return examples
 
 def queryIndex(index_name: str):
-    #query_body = {"query": {"match": {field: {"query": query, "operator": operator}}}}
     documents = []
     query_body = {"query": {"match_all": {}}}
     resp = client.search(index=index_name, body=query_body, size=100)

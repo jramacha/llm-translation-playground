@@ -258,7 +258,6 @@ if 'translated_text' in st.session_state:
         with bcol2:
           st.button("📋 Copy", on_click=on_copy_click, args=())
     with egcol2:
-      st.write("Paste your reference " +getLanguageChoices()[tl] +" translation  below")
-      st.text_area("", key="reference_text")
+      st.text_area("Paste your reference " +getLanguageChoices()[tl] +" translation  below", key="reference_text")
 
 refresh_metrics()

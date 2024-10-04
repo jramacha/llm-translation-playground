@@ -60,7 +60,7 @@ def getLanguageChoices():
 
 def loadRules(sl,tl):
   tmx_db=st.session_state.tmx_db
-  matching_rules = tmx_db.similarity_search(text2translate, filter={"lang": sl})
+  matching_rules = tmx_db.similarity_search(text2translate,filter={"lang": sl})
   st.session_state.text2translate=text2translate
   st.session_state.sl=sl
   st.session_state.tl=tl
@@ -216,7 +216,7 @@ with st.expander("Translation Customization"):
 
     session_state = st.session_state
     examples= []
-    if st.button("Process TMX File"):
+    if st.button("Process TMX File") and filename is not None:
       tmx_data = filename.getvalue()
       documents=processTMXFile(tmx_data, filename)
       tmx_db = loadEmbeddings(documents,embedding_modelId)
@@ -257,8 +257,7 @@ if 'translated_text' in st.session_state:
       with bcol2:
         st.button("📋 Copy", on_click=on_copy_click, args=())
     with egcol2:
-      st.write("Paste your reference " +getLanguageChoices()[tl] +" translation  below")
-      st.text_area("", key="reference_text")
+      st.text_area("Paste your reference " +getLanguageChoices()[tl] +" translation  below", key="reference_text")
 
 refresh_metrics()
      
