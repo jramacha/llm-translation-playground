@@ -137,10 +137,11 @@ Open the AWS CloudFormation console and select the stack named OpsServerlessSear
 
 ## Running the Application 💻
 
-If you deployed the OpenSearch stack, you'll need to edit the processors/.env file as follows:
-- HOST: OpenSearch collection endpoint without the 'https'
-- REGION: Region the collection was deployed into
-- INGESTION_LIMIT: maximum amount of translation units per TMX file that can be ingested into the index
+Before running the application, create a file named ```.env``` within the processors folder. Edit the file as follows:
+- HOST (String): OpenSearch collection endpoint without the 'https'
+- REGION (String): Region the collection was deployed into
+- OSS_INGESTION_LIMIT (Integer): maximum amount of translation units per TMX file that can be ingested into the OpenSearch index
+- FAISS_INGESTION_LIMIT (Integer): maximum amount of translation units per TMX file that can be ingested into the FAISS index
 
 Run the application (make sure you are back into root folder)
 
