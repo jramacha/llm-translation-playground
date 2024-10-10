@@ -67,33 +67,8 @@ This deployment requires you have an Amazon Q Business application deployed in y
 ### Security requirements
 
 Ensure that the principal running the application has valid credentials granting access to Amazon Bedrock's invoke_model and converse APIs. 
-The principal also needs OpenSearch Serverless permissions to peform the following operations:
-- create indices
-- delete indices
-- list indices
-- insert new documents into the deployed collection
-- search documents within the deployed collection
 
-You may use the statement below as an example.
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-         {
-            "Effect": "Allow",
-            "Action": "aoss:APIAccessAll",
-            "Resource": "arn:aws:aoss:region:account-id:collection/collection-id"
-        },
-        {
-            "Effect": "Allow",
-            "Action": "aoss:DashboardsAccessAll",
-            "Resource": "arn:aws:aoss:region:account-id:dashboards/default"
-        }
-    ]
-}
-```
-
-While using full access IAM permisions is acceptable for testing and prototyping, it is strongly recommended to apply the least privilege principle in production environments or whenever sensitive data is involved.
+Please note that the CDK deploys an OpenSearch Serverless data access policy for the collection and index it creates. It also creates a data access rule, granting permissions to the role specified in the CDK context JSON file.
 
 ### aws cdk bootstrap 
 
@@ -126,7 +101,7 @@ Update the CDK Context Parameters by modifying ```cdk.context.json```
     "oss_admin_access_role_arn": "arn:aws:iam::XXXXXXXXXXXX:role/MyRole",
     "collection_name": "search-subtitles"
 ```
-    1. oss_admin_access_role_arn: ARN of role configured that the application will assume to access the OpenSearch index. The stack will create a resource policy accordingly and attach it to the collection 
+    1. oss_admin_access_role_arn: ARN of role configured that the application will assume to access the OpenSearch index. The stack will create a data access policy accordingly and grant the necessary persmissions to the specified role 
 
     2. collection_name: Amazon OpenSearch collection name
 5. Run this command to deploy the stack ```cdk deploy```
