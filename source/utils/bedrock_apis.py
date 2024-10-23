@@ -6,7 +6,8 @@ import boto3
 import logging
 from botocore.exceptions import ClientError
 from click import prompt
-from lxml import etree
+from defusedxml import ElementTree as DET
+from xml.etree import ElementTree as ET
 from numpy import empty
 
 logger = logging.getLogger(__name__)
@@ -99,14 +100,28 @@ def getPromptXml2(sl, tl, text2translate, examples_xml,userPrompt, systemPrompt,
     xml_prompt = prompt%data 
     return appendExamples(xml_prompt,examples_xml)
 
+def indent(elem, level=0):
+    i = "\n" + level*"  "
+    if len(elem):
+        if not elem.text or not elem.text.strip():
+            elem.text = i + "  "
+        if not elem.tail or not elem.tail.strip():
+            elem.tail = i
+        for subelem in elem:
+            indent(subelem, level+1)
+        if not elem.tail or not elem.tail.strip():
+            elem.tail = i
+    else:
+        if level and (not elem.tail or not elem.tail.strip()):
+            elem.tail = i
 
 def appendExamples(xml_prompt,examples_xml):
     if xml_prompt != '' :
-        parser = etree.XMLParser(remove_blank_text=True)
-        root = etree.fromstring(xml_prompt, parser=parser)
+        root = DET.fromstring(xml_prompt)
         root.append(examples_xml)
+        indent(root)
         # Add the new element to the root
-        xml_prompt=etree.tostring(root, pretty_print=True, encoding='utf-8').decode('utf-8')
+        xml_prompt=ET.tostring(root, encoding='utf-8', method='xml').decode('utf-8')
 
     return xml_prompt
 
@@ -117,7 +132,7 @@ def populateCustomExampleXml(custom_examples, examplesRootElement):
     getCustomExampleXmlElement(examplesRootElement,lines) 
 
 def generateExamplesXML(custom_examples,sl,tl, session_state):
-  examplesRootElement = etree.Element('examples')
+  examplesRootElement = ET.Element('examples')
   populateCustomExampleXml(custom_examples,examplesRootElement)
   populateExamplesXml(examplesRootElement, sl, tl, session_state)
   return examplesRootElement
@@ -126,36 +141,36 @@ def populateExamplesXml(examplesRootElement, sl, tl, session_state):
   if 'examples' in session_state :
     examples=session_state.examples
     for example in examples:
-        exampleElement = etree.SubElement(examplesRootElement, 'example')
-        source = etree.SubElement(exampleElement, 'source')
+        exampleElement = ET.SubElement(examplesRootElement, 'example')
+        source = ET.SubElement(exampleElement, 'source')
         source.text = example[sl]
-        target = etree.SubElement(exampleElement, 'target')
+        target = ET.SubElement(exampleElement, 'target')
         target.text = example[tl]
 
 def getCustomExampleXmlElement(examplesRootElement,examples):
     for line in examples:
         if ":" in line:
             parts = line.split(":", 1)
-            example = etree.SubElement(examplesRootElement, 'example')
-            source = etree.SubElement(example, 'source')
+            example = ET.SubElement(examplesRootElement, 'example')
+            source = ET.SubElement(example, 'source')
             source.text = parts[0].strip()
-            target = etree.SubElement(example, 'target')
+            target = ET.SubElement(example, 'target')
             target.text = parts[1].strip()
     return examplesRootElement
 
 def generateCustomTerminologyXml(customTermValue):
     if customTermValue is not None and customTermValue.strip() != "":
         pairs = customTermValue.split("\n")
-        customTermRootElement = etree.Element('custom_terminology')
+        customTermRootElement = DET.fromstring('<custom_terminology/>')
         for line in pairs:
             if ":" in line:
                 parts = line.split(":", 1)
-                example = etree.SubElement(customTermRootElement, 'custom_term')
-                source = etree.SubElement(example, 'source')
+                example = ET.SubElement(customTermRootElement, 'custom_term')
+                source = ET.SubElement(example, 'source')
                 source.text = parts[0].strip()
-                target = etree.SubElement(example, 'target')
+                target = ET.SubElement(example, 'target')
                 target.text = parts[1].strip()
-        return etree.tostring(customTermRootElement, pretty_print=True, encoding='utf-8').decode('utf-8')
+        return ET.tostring(customTermRootElement, pretty_print=True, encoding='utf-8').decode('utf-8')
     return ""
 
 def getXMLPromptTemplate2(sl, tl, text2translate, userPrompt, systemPrompt, customTerminology):

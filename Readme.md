@@ -22,13 +22,15 @@ LLM Transalation Playground can help you decide which machine translation techno
 
 ### Features 🌟
 This sample application allows you to chose from several languages, input a source text and translate it in real-time. It also presents a sample implementation of some key localization capabilities such as:
-- Translation memory support (TMX or manually edited)
+- Translation memory support (TMX or manually edited). 
 - Customer terminology
 - On-screen BLEU score assessment
 
 You can choose from two options to enable the translation memory feature. Each option is available through its own page within the application:
 - Vector Store using FAISS. In this mode the application processes the .tmx file you uploaded, indexes it and stores it locally into a vector store (FAISS) 
 - Document Store using [Amazon OpenSearch Serverless](https://aws.amazon.com/opensearch/). You need to deploy the CDK stack included in the repository. Please note that only standard document search is supported. To test vector search, please use the Vector Store option
+
+Please note that when uploading a TMX to the document store, a manual refresh may be needed for the new index to become available for selection from the dropdown.
 
 ### Cost
 

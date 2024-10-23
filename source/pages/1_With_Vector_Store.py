@@ -8,7 +8,6 @@ import json
 import boto3
 import logging
 import pandas as pd
-from lxml import etree
 import clipboard
 from botocore.exceptions import ClientError
 from sacrebleu.metrics import BLEU
@@ -60,7 +59,8 @@ def getLanguageChoices():
 
 def loadRules(sl,tl):
   tmx_db=st.session_state.tmx_db
-  matching_rules = tmx_db.similarity_search(text2translate,filter={"lang": sl})
+  if text2translate is not None:
+    matching_rules = tmx_db.similarity_search(text2translate,filter={"lang": sl})
   st.session_state.text2translate=text2translate
   st.session_state.sl=sl
   st.session_state.tl=tl
@@ -123,8 +123,8 @@ def refresh_metrics():
       st.metric(label="Output Tokens", value=f'{output_tokens:,}')
     if 'bleu' in st.session_state:
       bleu = st.session_state['bleu']
-      if 'delta' in st.session_state['bleu']: st.metric(label="Translation score", value=str(round(bleu['score'], 2)), delta=str(round(bleu['delta'], 2)))
-      else: st.metric(label="Translation score", value=str(round(bleu['score'], 2)))
+      if 'delta' in st.session_state['bleu']: st.metric(label="Translation score (BLEU)", value=str(round(bleu['score'], 2)), delta=str(round(bleu['delta'], 2)))
+      else: st.metric(label="Translation score (BLEU)", value=str(round(bleu['score'], 2)))
 
 def evaluate():
   print("Running Evaluation")

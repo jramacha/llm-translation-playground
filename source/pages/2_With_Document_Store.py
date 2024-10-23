@@ -8,7 +8,6 @@ import json
 import boto3
 import logging
 import pandas as pd
-from lxml import etree
 import clipboard
 from botocore.exceptions import ClientError
 from sacrebleu.metrics import BLEU
@@ -124,7 +123,7 @@ def refresh_metrics():
       st.metric(label="Output Tokens", value=f'{output_tokens:,}')
     if 'bleu' in st.session_state:
       bleu = st.session_state['bleu']
-      if 'delta' in st.session_state['bleu']: st.metric(label="Translation score", value=str(round(bleu['score'], 2)), delta=str(round(bleu['delta'], 2)))
+      if 'delta' in st.session_state['bleu']: st.metric(label="Translation score (BLEU)", value=str(round(bleu['score'], 2)), delta=str(round(bleu['delta'], 2)))
       else: st.metric(label="Translation score", value=str(round(bleu['score'], 2)))
 
 def evaluate():
@@ -167,6 +166,18 @@ def translate():
     st.session_state.pop("bleu")
   evaluate()
 
+def on_index_change():
+    current_selection = st.session_state.index_name
+    print(f"Current selection: {current_selection}")
+    if current_selection != "No Index Selected":
+        documents = queryIndex(current_selection)
+        rule_language_lookup = populateRuleLanguageLookup(documents)
+        st.session_state.rule_language_lookup = rule_language_lookup
+        st.session_state.tmx_loaded = True
+        loadRules(sl, tl)
+
+
+
 st.title("Language Translator with LLMs")
 text2translate=st.text_area("Source Text")
 
@@ -202,28 +213,34 @@ with st.expander("Prompt Configuration",False):
   systemPrompt=st.text_area("System Prompt", DEFAULT_SYSTEM_PROMPT)
   userPrompt =st.text_area("User Prompt", DEFAULT_USER_PROMPT)
 
+
 with st.expander("Translation Customization"):
   egcol1, egcol2 = st.columns(2)
   with egcol1:
-    list = ['No Index Selected']
-    list.extend(listIndices())
-    if len(list)>0:
-      index_name = st.selectbox("Select a translation memory index", tuple(list),)
-    st.divider()
-    tmx_file = st.file_uploader("Upload a new TMX file", type=["tmx"])
-    if tmx_file is not None:
-        file_name = tmx_file.name
-        st.write('You selected `%s`' % file_name)
-        examples= []
-        if st.button("Process TMX File"):
-            tmx_data = tmx_file.getvalue()
-            index_name=processTMXFile(tmx_data, file_name)
-    if index_name is not None and index_name != "No Index Selected":
-      documents=queryIndex(index_name)
-      rule_language_lookup=populateRuleLanguageLookup(documents)
-      st.session_state.rule_language_lookup = rule_language_lookup
-      st.session_state.tmx_loaded = True
-      loadRules(sl,tl)
+      list = ['No Index Selected']
+      list.extend(listIndices())
+      if len(list) > 0:
+          st.session_state.index_list = list
+          # Use a key for the selectbox and set a default value
+          st.session_state.index_name = st.selectbox(
+              "Select a translation memory index",
+              options=tuple(st.session_state.index_list),
+              key="index_selector",
+              on_change=on_index_change
+          )
+      st.divider()
+      tmx_file = st.file_uploader("Upload a new TMX file", type=["tmx"])
+      if tmx_file is not None:
+          file_name = tmx_file.name
+          st.write('You selected `%s`' % file_name)
+          examples = []
+          if st.button("Process TMX File"):
+              tmx_data = tmx_file.getvalue()
+              loaded_index_name = processTMXFile(tmx_data, file_name)
+              if st.session_state.index_list is not None:
+                  st.session_state.index_list.append(loaded_index_name)
+              # Update the selectbox to the newly added item
+              # st.session_state.index_selector = loaded_index_name
 
   with egcol2:
     custom_examples=st.text_area("Provide translation memory manually: "+ getLanguageChoices()[sl] + " : " +getLanguageChoices()[tl] +"\n")

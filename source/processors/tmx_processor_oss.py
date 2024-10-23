@@ -55,7 +55,7 @@ def processTMXFile(tmx_data, index_name=None, metadata_tag=None, read_file=False
         tmx_soup=loadTMXFile(tmx_data)
     documents=parseDocuments(tmx_soup, ingestion_limit, metadata_tag)
     if index_name is None:
-        index_name = os.path.splitext(tmx_data)[0].split("/")[-1]
+        index_name = os.path.splitext(tmx_data)[0].split("/")[-1].replace(" ", "_").lower()
     indexDocuments(documents, index_name)
     return index_name
 
