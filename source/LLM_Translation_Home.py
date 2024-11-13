@@ -8,6 +8,7 @@ from utils.ui_utils import (
 )
 from utils.bedrock_apis import (
     invokeLLM,
+    converse,
 )
 import pandas as pd
 import base64
@@ -61,7 +62,7 @@ with st.container(border=True):
     st.write("The LLM Transalation Playground is an experimentation tool for business personas and developers looking to assess the viability of using Foundation Models available in [Amazon Bedrock](https://aws.amazon.com/bedrock/) for their machine translation use cases.\
             LLM Transalation Playground can help you decide which machine translation technology (Neural MT or LLM-based MT) is better suited for your machine translation workload.")
 
-with st.expander("Supported Languages", True):
+with st.expander("Configure Supported Languages", True):
   user_lang_mask = None
   if "lang_mask" in  st.session_state:
      user_lang_mask = st.session_state['lang_mask']
@@ -88,23 +89,24 @@ with st.expander("Supported Languages", True):
     st.markdown(df.to_html(escape=False, index=False), unsafe_allow_html=True)
     st.markdown(" ")
 
-with st.expander("Explore models"):
-  model_id=st.selectbox("Select LLM models from Amazon Bedrock",options=list(MODEL_CHOICES.keys()), format_func=format_func)
+#with st.expander("Explore models"):
+#  model_id=st.selectbox("Select LLM models from Amazon Bedrock",options=list(MODEL_CHOICES.keys()), format_func=format_func)
 
-  llm_q=st.text_area("Write your prompt")
-  st.session_state.llm_q=llm_q
+#  llm_q=st.text_area("Write your prompt")
+#  st.session_state.llm_q=llm_q
 
-  st.text("Model Parameters")
-  tmcol1,tmcol2,tmcol3 = st.columns(3)
-  with  tmcol1:
-    max_seq_len = st.number_input('Max Tokens', value=2000)
-  with  tmcol2:
-    temperature = st.slider('Temperature', value=0.5, min_value=0.0, max_value=1.0)
-  with  tmcol3:
-     top_p = st.slider('top_p', value=0.95, min_value=0.0, max_value=1.0)
+#  st.text("Model Parameters")
+#  tmcol1,tmcol2,tmcol3 = st.columns(3)
+#  with  tmcol1:
+#    max_seq_len = st.number_input('Max Tokens', value=2000)
+#  with  tmcol2:
+#    temperature = st.slider('Temperature', value=0.5, min_value=0.0, max_value=1.0)
+#  with  tmcol3:
+#     top_p = st.slider('top_p', value=0.95, min_value=0.0, max_value=1.0)
 
-  if st.button(MODEL_CHOICES[model_id]+" at Your Service"):
-      response = invokeLLM(llm_q,model_id,max_seq_len,temperature,top_p)
-      result = json.loads(response.get("body").read())
-      output_list = result.get("content", [])
-      st.write(output_list[0]["text"])
+# if st.button(MODEL_CHOICES[model_id]+" at Your Service"):
+#      response = converse("", llm_q, model_id, max_seq_len, temperature, top_p)
+#      output_list = response["output"]["message"]["content"]
+      #result = json.loads(response.get("body").read())
+      #output_list = result.get("content", [])
+#      st.write(output_list[0]["text"])

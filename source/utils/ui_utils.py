@@ -8,9 +8,6 @@ MODEL_CHOICES = {
    "anthropic.claude-3-5-sonnet-20240620-v1:0": "Claude 3.5 Sonnet v1",
    "anthropic.claude-3-5-haiku-20241022-v1:0": "Claude 3.5 Haiku v1",
    "amazon.titan-text-premier-v1:0":"Amazon Titan Text Premier",
-   "mistral.mistral-large-2402-v1:0": "Mistral",
-   "ai21.j2-ultra-v1":"Jurassic-2 Ultra",
-   "cohere.command-r-plus-v1:0":"Cohere	Command R+",
    "meta.llama3-1-70b-instruct-v1:0":"Meta	Llama 3.1 70b Instruct"
 }
 
