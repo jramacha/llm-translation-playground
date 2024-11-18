@@ -4,9 +4,9 @@ from langchain_core.documents import Document
 from dotenv import load_dotenv
 import uuid
 import os
+from utils.config import get_faiss_ingestion_limit
 
-load_dotenv()
-ingestion_limit = int(os.getenv("FAISS_INGESTION_LIMIT", default=20))
+ingestion_limit = get_faiss_ingestion_limit
 
 def loadTMXFile(tmx_file):
     return BeautifulSoup(open(tmx_file), "lxml")

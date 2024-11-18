@@ -1,20 +1,92 @@
 import json
 
 import aws_cdk as cdk
-
 from aws_cdk import (
   Stack,
-  aws_opensearchserverless as aws_opss
+  aws_opensearchserverless as aws_opss,
+  aws_iam as iam
 )
 from constructs import Construct
+from aws_cdk import Aspects
+from cdk_nag import NagSuppressions
+
+MODEL_CHOICES = {
+   "anthropic.claude-3-5-sonnet-20240620-v1:0": "Claude 3.5 Sonnet v1",
+   "anthropic.claude-3-5-haiku-20241022-v1:0": "Claude 3.5 Haiku v1",
+   "amazon.titan-text-premier-v1:0":"Amazon Titan Text Premier",
+   "mistral.mistral-large-2402-v1:0": "Mistral",
+   "ai21.j2-ultra-v1":"Jurassic-2 Ultra",
+   "cohere.command-r-plus-v1:0":"Cohere	Command R+",
+   "meta.llama3-1-70b-instruct-v1:0":"Meta	Llama 3.1 70b Instruct"
+}
 
 class OpsServerlessSearchStack(Stack):
 
   def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
     super().__init__(scope, construct_id, **kwargs)
-
     collection_name = self.node.try_get_context('collection_name')
-    oss_admin_access_role_arn = self.node.try_get_context('oss_admin_access_role_arn')
+    
+    # Add CDK nag suppressions for wildcard permissions
+    NagSuppressions.add_stack_suppressions(
+      self,
+      [
+          {
+              "id": "AwsSolutions-IAM5",
+              "reason": "Wildcard permissions needed for OpenSearch indices API access. Stack also creates data acess policy restricting access to only the relevant collection."
+          }
+      ]
+    )
+
+    # Create IAM role for Bedrock invocation
+    llm_translation_playground_role = iam.Role(self, "LLMTranslationPlaygroundAppRole",
+      assumed_by=iam.AccountPrincipal(self.account),
+    )
+    
+    # Add policy to allow listing and creating indices
+    opensearch_indices_policy = iam.PolicyStatement(
+      sid = "OpenSearchIndicesPolicy",
+      actions=["aoss:APIAccessAll"],
+      resources=["*"]
+    )
+    llm_translation_playground_role.add_to_principal_policy(opensearch_indices_policy)
+
+    # Add policy to allow Bedrock invocation for specific models
+    bedrock_policy = iam.PolicyStatement(
+      actions=["bedrock:InvokeModel"],
+      resources=[
+        f"arn:aws:bedrock:{self.region}::foundation-model/{model_id}"
+        for model_id in MODEL_CHOICES.keys()
+      ]
+    )
+    llm_translation_playground_role.add_to_principal_policy(bedrock_policy)
+    llm_translation_playground_role_arn = llm_translation_playground_role.role_arn
+  
+    # Create a custom assume role policy (not attached to any role)
+    assume_role_policy = iam.ManagedPolicy(
+      self, "LLMTranslationPlaygroundAppRoleAssumePolicy",
+      document=iam.PolicyDocument(
+        statements=[
+          iam.PolicyStatement(
+            actions=["sts:AssumeRole"],
+            effect=iam.Effect.ALLOW,
+            resources=[llm_translation_playground_role.role_arn]  # This allows assuming only the Bedrock invocation role
+          )
+        ]
+      ),
+      description="Custom policy to assume the LLMTranslationPlayground Application role"
+    )
+
+    # Output the created Bedrock role's ARN
+    cdk.CfnOutput(self, "LLMTranslationPlaygroundAppRoleArn",
+      value=llm_translation_playground_role.role_arn,
+      description="ARN of the IAM role for LLMTranslationPlayground App Role"
+    )
+
+    # Output the custom assume role policy ARN
+    cdk.CfnOutput(self, "LLMTranslationPlaygroundAppRoleAssumePolicyArn",
+      value=assume_role_policy.managed_policy_arn,
+      description="ARN of the custom policy to assume LLMTranslationPlayground App Role. Add this policy to your current role/user"
+    )
 
     network_security_policy = json.dumps([{
       "Rules": [
@@ -105,7 +177,7 @@ class OpsServerlessSearchStack(Stack):
           }
         ],
         "Principal": [
-          f"{oss_admin_access_role_arn}"
+          f"{llm_translation_playground_role_arn}"
         ],
         "Description": "data-access-rule"
       }

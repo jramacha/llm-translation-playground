@@ -9,10 +9,13 @@ from click import prompt
 from defusedxml import ElementTree as DET
 from xml.etree import ElementTree as ET
 from numpy import empty
+from utils.refreshable_boto_session import get_refreshable_boto_session
 
 logger = logging.getLogger(__name__)
 
-client = boto3.client(service_name="bedrock-runtime", region_name="us-east-1")
+session = get_refreshable_boto_session()
+client = session.client("bedrock-runtime")
+#client = boto3.client(service_name="bedrock-runtime", region_name="us-east-1")
 
 DEFAULT_SYSTEM_PROMPT="You are an expert language translation assistant.\
     You will be given a text in one language, and you will translate it into a target language. You should maintain the same tone, style, and meaning as the original text in your translation."

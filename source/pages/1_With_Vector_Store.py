@@ -156,7 +156,7 @@ def translate():
   st.session_state['latency']=response["metrics"]["latencyMs"]
   output_list = response["output"]["message"]["content"]
 
-  print(f"The model returned {len(output_list)} response(s):")
+  print(f"{len(output_list)} translation response(s) received")
   translated2Text = {
               output_list[0]["text"]
           }

@@ -1,23 +1,28 @@
 from queue import Empty
 from bs4 import BeautifulSoup
-from langchain_core.documents import Document
 from typing import Any
-from dotenv import load_dotenv
 from opensearchpy import OpenSearch, RequestsHttpConnection, AWSV4SignerAuth
 from opensearchpy.helpers import bulk
 import boto3
 import uuid
 import os
+from utils.config import get_oss_ingestion_limit, get_host, get_region, get_oss_port
+from utils.refreshable_boto_session import get_refreshable_boto_session
 
-load_dotenv()
+#load_dotenv()
 
-host = os.getenv("HOST", default="localhost")
-port = int(os.getenv("PORT", 443))
-region = os.getenv("REGION", default="us-east-1")
+#host = os.getenv("HOST", default="localhost")
+#port = int(os.getenv("PORT", 443))
+#egion = os.getenv("REGION", default="us-east-1")
+
 service = 'aoss'
-credentials = boto3.Session().get_credentials()
+region = get_region()
+credentials = get_refreshable_boto_session().get_credentials()
 auth = AWSV4SignerAuth(credentials, region, service)
-ingestion_limit = int(os.getenv("OSS_INGESTION_LIMIT", default=20))
+
+ingestion_limit = get_oss_ingestion_limit()
+host = get_host()
+port = get_oss_port()
 
 client = OpenSearch(
         hosts=[{"host": host, "port": port}],

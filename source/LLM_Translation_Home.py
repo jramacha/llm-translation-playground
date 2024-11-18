@@ -15,10 +15,11 @@ import base64
 import streamlit as st
 import base64
 
+LOGO_IMAGE = "Arch_Amazon-Bedrock_64.png"
+
 def format_func(option):
     return MODEL_CHOICES[option]
 
-LOGO_IMAGE = "Arch_Amazon-Bedrock_64.png"
 
 st.set_page_config(
     page_title="LLM Translation Playground",

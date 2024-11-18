@@ -62,13 +62,9 @@ For building the lambda layer docker needs to be installed and running.
 
 These deployment instructions are optimized to best work on a Mac or Linux environment. Deployment in Windows may require additional steps for setting up required libraries and CLI. 
 
-### AWS account requirements
-
-This deployment requires you have an Amazon Q Business application deployed in your account.
-
 ### Security requirements
 
-Ensure that the principal running the application has valid credentials granting access to Amazon Bedrock's invoke_model and converse APIs. 
+The deployment code creates the appropriate role and policies on your behalf, following the least privileges principle. Ensure that the principal you run the application under has valid credentials and enough permissions to attach a policy to their role. Alternatively you may work with your Admin to attach the required policy to your principal.
 
 Please note that the CDK deploys an OpenSearch Serverless data access policy for the collection and index it creates. It also creates a data access rule, granting permissions to the role specified in the CDK context JSON file.
 
@@ -92,20 +88,15 @@ This Guidance uses aws-cdk. If you are using aws-cdk for first time, please perf
 
 ```python -m pip install -r requirements.txt```
 
-4. Install OpenSearch stack
+4. Install the application stack
 
-```cd deployment```
-
-```python -m pip install -r requirements.txt```
+```cd deployment/cdk```
 
 Update the CDK Context Parameters by modifying ```cdk.context.json```
 ```
-    "oss_admin_access_role_arn": "arn:aws:iam::XXXXXXXXXXXX:role/MyRole",
     "collection_name": "search-subtitles"
 ```
-    1. oss_admin_access_role_arn: ARN of role configured that the application will assume to access the OpenSearch index. The stack will create a data access policy accordingly and grant the necessary persmissions to the specified role 
-
-    2. collection_name: Amazon OpenSearch collection name
+    1. collection_name: Amazon OpenSearch collection name
 5. Run this command to deploy the stack ```cdk deploy```
 
 ## Deployment Validation
@@ -114,8 +105,10 @@ Open the AWS CloudFormation console and select the stack named OpsServerlessSear
 
 ## Running the Application 💻
 
-Before running the application, create a file named ```.env``` within the processors folder. Edit the file as follows:
-- HOST (String): OpenSearch collection endpoint without the 'https'
+Before running the application, create a file named ```.env``` within the utils folder. Edit the file as follows:
+- HOST (String): OpenSearch collection endpoint without the 'https'. Stack output: OpenSearchEndpoint
+- OSS_PORT (Integer): OpenSearch endpoint port number. Default is 443
+- ARR_ROLE_ARN: ARN of role cretaed by the CDK stack. The application will assume the role to access the OpenSearch index and the relevant Amazon Bedrock models. Stack output LLMTranslationPlaygroundAppRoleArn
 - REGION (String): Region the collection was deployed into
 - OSS_INGESTION_LIMIT (Integer): maximum amount of translation units per TMX file that can be ingested into the OpenSearch index
 - FAISS_INGESTION_LIMIT (Integer): maximum amount of translation units per TMX file that can be ingested into the FAISS index
@@ -128,7 +121,7 @@ Run the application (make sure you are back into root folder)
 
 ## Cleanup
 
-1. Navigate to deployment directory ```cd llm-translation-playground/deployment/```
+1. Navigate to deployment directory ```cd llm-translation-playground/deployment/cdk```
 2. Run this command to cleanup ```cdk destroy```
 
 ## License
