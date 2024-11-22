@@ -9,6 +9,13 @@ import pandas as pd
 import clipboard
 from botocore.exceptions import ClientError
 from sacrebleu.metrics import BLEU
+from bert_score import BERTScorer
+from nltk.translate.meteor_score import meteor_score
+from nltk.translate.chrf_score import sentence_chrf
+import nltk
+
+
+nltk.download('wordnet')
 
 from utils.bedrock_apis import (
     invokeLLM,
@@ -42,6 +49,7 @@ if "lang_list" not in st.session_state:
   st.session_state["lang_list"] = loadLanguageChoices()
 
 bleu = BLEU()
+bert_scorer = None
 
 def on_copy_click():
     # st.session_state.copied.append(text)
@@ -121,23 +129,96 @@ def refresh_metrics():
       st.metric(label="Output Tokens", value=f'{output_tokens:,}')
     if 'bleu' in st.session_state:
       bleu = st.session_state['bleu']
-      if 'delta' in st.session_state['bleu']: st.metric(label="Translation score (BLEU)", value=str(round(bleu['score'], 2)), delta=str(round(bleu['delta'], 2)))
-      else: st.metric(label="Translation score", value=str(round(bleu['score'], 2)))
+      if 'bleu_delta' in st.session_state['bleu']: st.metric(label="BLEU", value=str(round(bleu['score'], 2)), delta=str(round(bleu['bleu_delta'], 2)))
+      else: st.metric(label="BLEU", value=str(round(bleu['score'], 2)))
+    if 'bert_score' in st.session_state:
+      bert_score = st.session_state['bert_score']
+      if 'bert_delta' in st.session_state['bert_score']: 
+         st.metric(label="BERTScore F1", value=str(round(bert_score['f1'] * 100, 2)), delta=str(round(bert_score['bert_delta'] * 100, 2)))
+      else: 
+         st.metric(label="BERTScore F1", value=str(round(bert_score['f1'] * 100, 2)))
+    if 'meteor' in st.session_state:
+      meteor = st.session_state['meteor']
+      if 'meteor_delta' in meteor:
+        st.metric(label="METEOR", value=str(round(meteor['score'] * 100, 2)), delta=str(round(meteor['meteor_delta'] * 100, 2)))
+      else:
+        st.metric(label="METEOR", value=str(round(meteor['score'] * 100, 2)))
+    if 'chrf' in st.session_state:
+        chrf = st.session_state['chrf']
+        if 'chrf_delta' in chrf:
+            st.metric(label="ChrF", value=str(round(chrf['score'] * 100, 2)), delta=str(round(chrf['chrf_delta'] * 100, 2)))
+        else:
+            st.metric(label="ChrF", value=str(round(chrf['score'] * 100, 2)))
 
 def evaluate():
   print("Running Evaluation")
   if 'translated_text' in st.session_state and 'reference_text' in st.session_state:
+    
+    # BLEU score
     sys = st.session_state['translated_text'].split(".")
     refs = [st.session_state['reference_text'].split(".")]
     result = bleu.corpus_score(sys, refs)
-    delta = None
+         
+    bleu_delta = None
     if 'bleu' in st.session_state:
        previous = st.session_state['bleu']['score']
-       delta = result.score - previous
-       st.session_state['bleu']['delta']=delta
+       bleu_delta = result.score - previous
+       st.session_state['bleu']['bleu_delta']=bleu_delta
     else:
        st.session_state['bleu'] = {}
     st.session_state['bleu']['score']=result.score
+
+    # BERTScore
+    global bert_scorer
+    if bert_scorer is None or bert_scorer.lang != tl.lower():
+      bert_scorer = BERTScorer(model_type='bert-base-uncased', lang=tl.lower())
+    P, R, F1 = bert_scorer.score([st.session_state['translated_text']], [st.session_state['reference_text']])
+    
+    bert_delta = 0
+    if 'bert_score' in st.session_state:
+       previous = st.session_state['bert_score']['f1']
+       bert_delta = F1.mean().item() - previous
+       #st.session_state['bert_score']['bert_delta']=bert_delta
+    else:
+       st.session_state['bert_score'] = {}
+
+    st.session_state['bert_score'] = {
+        'precision': P.mean().item(),
+        'recall': R.mean().item(),
+        'f1': F1.mean().item(),
+        'bert_delta': bert_delta
+    }
+
+    # METEOR score
+    translated = st.session_state['translated_text'].split()
+    reference = [st.session_state['reference_text'].split()]
+    meteor_result = meteor_score(reference, translated)
+    meteor_delta = None
+    if 'meteor' in st.session_state:
+        previous = st.session_state['meteor']['score']
+        meteor_delta = meteor_result - previous
+        st.session_state['meteor']['meteor_delta'] = meteor_delta
+    else:
+        st.session_state['meteor'] = {}
+    st.session_state['meteor']['score'] = meteor_result
+
+    # ChrF score
+    chrf_result = sentence_chrf(
+        reference=st.session_state['reference_text'],
+        hypothesis=st.session_state['translated_text'],
+        min_len=1,  # minimum n-gram length
+        max_len=6,  # maximum n-gram length
+        beta=3.0    # importance of recall over precision
+    )
+
+    chrf_delta = None
+    if 'chrf' in st.session_state:
+        previous = st.session_state['chrf']['score']
+        chrf_delta = chrf_result - previous
+        st.session_state['chrf']['chrf_delta'] = chrf_delta
+    else:
+        st.session_state['chrf'] = {}
+    st.session_state['chrf']['score'] = chrf_result
 
 def translate():
   examplesXml=generateExamplesXML(st.session_state['custom_examples'],sl,tl, st.session_state)
