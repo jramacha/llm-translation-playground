@@ -17,7 +17,8 @@ MODEL_CHOICES = {
    "mistral.mistral-large-2402-v1:0": "Mistral",
    "ai21.j2-ultra-v1":"Jurassic-2 Ultra",
    "cohere.command-r-plus-v1:0":"Cohere	Command R+",
-   "meta.llama3-1-70b-instruct-v1:0":"Meta	Llama 3.1 70b Instruct"
+   "meta.llama3-1-70b-instruct-v1:0":"Meta	Llama 3.1 70b Instruct",
+   "amazon.nova-lite-v1:0":"Amazon Nova Lite"
 }
 
 class OpsServerlessSearchStack(Stack):

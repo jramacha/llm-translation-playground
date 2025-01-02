@@ -14,13 +14,12 @@ from nltk.translate.meteor_score import meteor_score
 from nltk.translate.chrf_score import sentence_chrf
 import nltk
 
-
 nltk.download('wordnet')
 
 from utils.bedrock_apis import (
     invokeLLM,
     converse,
-    getPromptXml2,
+    getFormattedPrompt,
     generateCustomTerminologyXml,
     generateExamplesXML,
     DEFAULT_SYSTEM_PROMPT,
@@ -223,7 +222,7 @@ def evaluate():
 def translate():
   examplesXml=generateExamplesXML(st.session_state['custom_examples'],sl,tl, st.session_state)
   customTermsXml=generateCustomTerminologyXml(st.session_state['custom_terms'])
-  prompt = getPromptXml2(getLanguageChoices()[sl],getLanguageChoices()[tl],text2translate,examplesXml, userPrompt, systemPrompt, customTermsXml)
+  prompt = getFormattedPrompt(getLanguageChoices()[sl],getLanguageChoices()[tl],text2translate,examplesXml, userPrompt, systemPrompt, customTermsXml)
   st.session_state['prompt'] = prompt
   #response=invokeLLM(prompt,model_id)
   response=converse(systemPrompt,prompt,model_id, max_seq_len, temperature,top_p)

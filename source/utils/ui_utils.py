@@ -5,6 +5,7 @@ import boto3
 LANG_CHOICES = None
 
 MODEL_CHOICES = {
+    "amazon.nova-lite-v1:0":"Amazon Nova Lite",
    "anthropic.claude-3-5-sonnet-20240620-v1:0": "Claude 3.5 Sonnet v1",
    "anthropic.claude-3-5-haiku-20241022-v1:0": "Claude 3.5 Haiku v1",
    "amazon.titan-text-premier-v1:0":"Amazon Titan Text Premier",

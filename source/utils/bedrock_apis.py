@@ -20,21 +20,21 @@ client = session.client("bedrock-runtime")
 DEFAULT_SYSTEM_PROMPT="You are an expert language translation assistant.\
     You will be given a text in one language, and you will translate it into a target language. You should maintain the same tone, style, and meaning as the original text in your translation."
 
-DEFAULT_USER_PROMPT="Translate the text in the input_text tag from SOURCE_LANGUAGE to TARGET_LANGUAGE. Source language and target language can be found respectively in the source_language and target_language tags.\
+DEFAULT_USER_PROMPT="Pay attention to the information included in the context tag. Translate the text in the input_text tag from SOURCE_LANGUAGE to TARGET_LANGUAGE. Source language and target language can be found respectively in the source_language and target_language tags.\
     Use the examples provided in examples tag and apply respective examples to influence the translation output's tone and vocabulary.\
     User the custom terms in the custom_terminology tags as strict translation guidelines.\
     Only return the translated text."
 
-def invokeLLM(llm_q,model_id,maxTokes,temperature,top_p):
+def invokeLLM(llm_q, model_id, maxToken, temperature, top_p):
   data = {
-      "max_tokens": maxTokes,
+      "max_tokens": maxToken,
       "messages": [
           {"role": "user", "content": llm_q}
-      ],
+        ],
       "anthropic_version": "bedrock-2023-05-31",
       "temperature": temperature
       ,"top_p": top_p
-      }
+    }
 
   try:
     response = client.invoke_model(
@@ -97,11 +97,14 @@ def converse (system_prompt,llm_q,model_id,maxTokens,temperature,top_p):
    
    
 
-def getPromptXml2(sl, tl, text2translate, examples_xml,userPrompt, systemPrompt, customTerminology):
-    prompt=getXMLPromptTemplate2(sl,tl,text2translate,userPrompt, systemPrompt, customTerminology)
-    data = { 'sl':sl, 'tl':tl, 'text2translate':text2translate,"userPrompt":userPrompt, "systemPrompt":systemPrompt, "customTerminology":customTerminology}
-    xml_prompt = prompt%data 
-    return appendExamples(xml_prompt,examples_xml)
+def getFormattedPrompt(sl, tl, text2translate, examples_xml,userPrompt, systemPrompt, customTerminology):
+    prompt=getXMLPromptTemplate(sl,tl,text2translate,userPrompt, systemPrompt, customTerminology)
+    context_data = { 'sl':sl, 'tl':tl, 'text2translate':text2translate,"customTerminology":customTerminology}
+    xml_prompt = prompt%context_data
+    xml_prompt = appendExamples(xml_prompt,examples_xml)
+    xml_prompt = ''.join(["Task:\n%(systemPrompt)s\n\n", "Context Information:\n", xml_prompt, "\n\nInstructions:\n%(userPrompt)s"])
+    default_prompts = {"userPrompt":userPrompt, "systemPrompt":systemPrompt}
+    return xml_prompt%default_prompts
 
 def indent(elem, level=0):
     i = "\n" + level*"  "
@@ -176,7 +179,27 @@ def generateCustomTerminologyXml(customTermValue):
         return ET.tostring(customTermRootElement, pretty_print=True, encoding='utf-8').decode('utf-8')
     return ""
 
-def getXMLPromptTemplate2(sl, tl, text2translate, userPrompt, systemPrompt, customTerminology):
+def getXMLPromptTemplate(sl, tl, text2translate, userPrompt, systemPrompt, customTerminology):
+    prompt="""
+    <context>
+    <source_language>
+        <language_name>%(sl)s</language_name>
+    </source_language>
+
+    <target_language>
+        <language_name>%(tl)s</language_name>
+    </target_language>
+
+    <input_text>
+        %(text2translate)s
+    </input_text>
+    %(customTerminology)s
+    
+    </context>
+    """
+    return prompt
+
+def getFullXMLPromptTemplate(sl, tl, text2translate, userPrompt, systemPrompt, customTerminology):
     prompt="""
     <prompt>
     <system_instructions>

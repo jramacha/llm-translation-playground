@@ -124,7 +124,10 @@ Run the application (make sure you are back into root folder)
 1. Navigate to deployment directory ```cd llm-translation-playground/deployment/cdk```
 2. Run this command to cleanup ```cdk destroy```
 
+## Known issues
+
+Selection of a translation memory index from the dropdown menu in the customization panel may not be taken into account instantly. If this occurs you may need to unselect and re-select the item for the configuration to be reflected.
+
 ## License
 
 This library is licensed under the MIT-0 License. See the LICENSE file.
-
