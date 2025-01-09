@@ -1,6 +1,6 @@
 # LLM Translation Playground
 
-Welcome to the LLM Powered Languague Transalation Playground.
+Welcome to the LLM Powered Language Transalation Playground.
 
 ## Table of Content
 
