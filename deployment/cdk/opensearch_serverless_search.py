@@ -12,13 +12,17 @@ from cdk_nag import NagSuppressions
 
 MODEL_CHOICES = {
    "anthropic.claude-3-5-sonnet-20240620-v1:0": "Claude 3.5 Sonnet v1",
+   "us.anthropic.claude-3-7-sonnet-20250219-v1:0": "Claude 3.7 Sonnet v1",
+   "us.anthropic.claude-sonnet-4-20250514-v1:0": "Claude Sonnet 4",
+   "cohere.command-r-plus-v1:0": "Cohere R plus v1",
+   "cohere.command-r-v1:0": "Cohere R v1",
    "anthropic.claude-3-5-haiku-20241022-v1:0": "Claude 3.5 Haiku v1",
-   "amazon.titan-text-premier-v1:0":"Amazon Titan Text Premier",
-   "mistral.mistral-large-2402-v1:0": "Mistral",
+   "amazon.titan-text-express-v1": "Amazon Titan Text Express",
+   "amazon.titan-text-lite-v1": "Amazon Titan Text Lite",
+   "mistral.mistral-large-2402-v1:0": "Mistral Large",
    "ai21.j2-ultra-v1":"Jurassic-2 Ultra",
-   "cohere.command-r-plus-v1:0":"Cohere	Command R+",
-   "meta.llama3-1-70b-instruct-v1:0":"Meta	Llama 3.1 70b Instruct",
-   "amazon.nova-lite-v1:0":"Amazon Nova Lite"
+   "meta.llama3-1-70b-instruct-v1:0":"Meta Llama 3.1 70b Instruct",
+  #  "us-west-2.amazon.nova-lite-v1:0":"Amazon Nova Lite"
 }
 
 class OpsServerlessSearchStack(Stack):
@@ -52,13 +56,21 @@ class OpsServerlessSearchStack(Stack):
     llm_translation_playground_role.add_to_principal_policy(opensearch_indices_policy)
 
     # Add policy to allow Bedrock invocation for specific models
+    # Separate foundation models from inference profiles
+    foundation_models = [model_id for model_id in MODEL_CHOICES.keys() if not model_id.startswith('us.')]
+    inference_profiles = [model_id for model_id in MODEL_CHOICES.keys() if model_id.startswith('us.')]
+
     bedrock_policy = iam.PolicyStatement(
-      actions=["bedrock:InvokeModel"],
+      actions=["bedrock:InvokeModel", "bedrock:Converse"],
       resources=[
         f"arn:aws:bedrock:{self.region}::foundation-model/{model_id}"
-        for model_id in MODEL_CHOICES.keys()
+        for model_id in foundation_models
+      ] + [
+        f"arn:aws:bedrock:{self.region}:{self.account}:inference-profile/{profile_id}"
+        for profile_id in inference_profiles
       ]
     )
+
     llm_translation_playground_role.add_to_principal_policy(bedrock_policy)
     llm_translation_playground_role_arn = llm_translation_playground_role.role_arn
   

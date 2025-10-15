@@ -99,7 +99,7 @@ typing_extensions==4.12.2
 tzdata==2024.2
 urllib3==2.2.3
 yarl==1.17.2
-bert-score==0.3.1
-transformers==2.0.0
+#bert-score==0.3.1
+#transformers==2.0.0
 transformers==4.30.0 
 bert-score==0.3.13

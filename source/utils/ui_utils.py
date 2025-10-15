@@ -5,11 +5,18 @@ import boto3
 LANG_CHOICES = None
 
 MODEL_CHOICES = {
-    "amazon.nova-lite-v1:0":"Amazon Nova Lite",
+    # "us-west-2.amazon.nova-lite-v1:0":"Amazon Nova Lite",
    "anthropic.claude-3-5-sonnet-20240620-v1:0": "Claude 3.5 Sonnet v1",
+   "us.anthropic.claude-3-7-sonnet-20250219-v1:0": "Claude 3.7 Sonnet v1",
+   "us.anthropic.claude-sonnet-4-20250514-v1:0": "Claude Sonnet 4",
+   "cohere.command-r-plus-v1:0": "Cohere R plus v1",
+   "cohere.command-r-v1:0": "Cohere R v1",
    "anthropic.claude-3-5-haiku-20241022-v1:0": "Claude 3.5 Haiku v1",
-   "amazon.titan-text-premier-v1:0":"Amazon Titan Text Premier",
-   "meta.llama3-1-70b-instruct-v1:0":"Meta	Llama 3.1 70b Instruct"
+   "amazon.titan-text-express-v1": "Amazon Titan Text Express",
+   "amazon.titan-text-lite-v1": "Amazon Titan Text Lite",
+    "mistral.mistral-large-2402-v1:0": "Mistral Large",
+   "meta.llama3-1-70b-instruct-v1:0":"Meta	Llama 3.1 70b Instruct",
+
 }
 
 #Function that loads the list of supported languages from the supported_lang.json file. Return the loaded json object
